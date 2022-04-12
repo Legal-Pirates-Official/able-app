@@ -10,14 +10,14 @@ const Gridcont = () => {
       itemDimension={130}
       data={griddata}
       style={styles.gridView}
-      // staticDimension={300}
+      staticDimension={420}
       // fixed
       spacing={10}
       renderItem={({ item }) => (
-        <View style={[styles.itemContainer, { backgroundColor: item.code }]}>
+        <View style={[styles.itemContainer]}>
           <Text style={styles.itemName}>{item.name}</Text>
-          <Text style={styles.itemName}>{item.colan}</Text>
           <Text style={styles.itemCode}>{item.code}</Text>
+          <Text style={styles.itemCode}>{item.codetwo}</Text>
         </View>
       )}
     />
@@ -26,44 +26,31 @@ const Gridcont = () => {
 
 export default Gridcont
 
-
-// const styles = StyleSheet.create({
-//     areatwo: {
-//         height: height / 2,
-//         alignItems: "center",
-//         justifyContent: "center",
-//       },
-//       abouttitle: {
-//         color: "#fff",
-//         fontSize: 30,
-//         fontWeight: "bold",
-//       },
-//       aboutview: {
-//         height: 50,
-//         width: width - 30,
-//       },
-// })
-
 const styles = StyleSheet.create({
   gridView: {
-    marginTop: 10,
-    flex: 1,
+    marginTop: 20,
   },
   itemContainer: {
-    justifyContent: 'flex-end',
-    flexDirection: 'column',
-    borderRadius: 5,
+    justifyContent: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#81E2D7',
+    borderRadius: 15,
     padding: 10,
     height: 150,
+    width: 190,
   },
   itemName: {
-    fontSize: 16,
+    fontSize: 120,
     color: '#fff',
+    alignSelf: 'center',
     fontWeight: '600',
+    position: 'absolute',
+    opacity: 0.3,
   },
   itemCode: {
-    fontWeight: '600',
-    fontSize: 12,
-    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 20,
+    color: '#000',
+    alignSelf: 'center',
   },
 });
