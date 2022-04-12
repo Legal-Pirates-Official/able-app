@@ -126,17 +126,6 @@ const AboutAdmin = ({about}) => {
                                 value={values.card_description}
                             />
                         </View>
-                        {/* <View style={styles.inputView}>
-                            <Text style={styles.inputlabel}>Card Image</Text>
-                            <TextInput
-                                name="card_image"
-                                multiline={true}
-                                style={styles.textInput}
-                                onBlur={handleBlur("card_image")}
-                                onChangeText={handleChange("card_image")}
-                                value={values.card_image}
-                            />
-                        </View> */}
                         <View>
                             {selectedImage && (
                                 <Image
