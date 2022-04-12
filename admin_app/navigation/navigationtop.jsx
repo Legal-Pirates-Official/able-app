@@ -33,7 +33,7 @@ function Topnavigation() {
 					position: 'absolute',
 					bottom: 0
 				},
-				initialRoute: 'Home',
+				initialRoute: 'StoriesAdmin',
 				tabBarIcon: ({ focused, color, size }) => {
 					let iconName;
 					let iconsize;

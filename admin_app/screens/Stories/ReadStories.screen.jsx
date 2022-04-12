@@ -4,13 +4,16 @@ import {
 	ScrollView,
 	FlatList,
 	StatusBar,
-	StyleSheet,Image
+	StyleSheet,
+	Image,
+	TouchableOpacity,
+	Dimensions
 } from 'react-native';
 import React, { useEffect, useState } from 'react';
+import { MaterialIcons } from '@expo/vector-icons';
+import { getStories, deleteStories } from '../../axios/stories.axios';
 
-import { getStories } from '../../axios/stories.axios';
-
-const ReadStories = () => {
+const ReadStories = ({ navigation }) => {
 	const [stories, setStories] = useState([]);
 
 	useEffect(() => {
@@ -25,13 +28,39 @@ const ReadStories = () => {
 				<FlatList
 					data={stories}
 					renderItem={({ item }) => (
-						<View style={styles.storyCard}>
-							<View>
-								<Text>{item.video_title}</Text>
-								<Text>{item.video_description}</Text>
-								<Text>{item.video_type}</Text>
+						<TouchableOpacity
+							onPress={() => navigation.push('Update', { item })}
+							style={styles.storyCard}
+						>
+							<View
+								style={{
+									height: '100%',
+									position: 'relative'
+								}}
+							>
+								<View>
+									<Text
+										style={{ fontSize: 25, fontWeight: '700', marginBottom: 3 }}
+									>
+										{item.video_title}
+									</Text>
+									<Text style={{ fontSize: 16, marginBottom: 3 }}>
+										{item.video_description}
+									</Text>
+									<Text>{item.video_type}</Text>
+								</View>
+								<TouchableOpacity
+									onPress={() => deleteStories(item.id)}
+									style={{ position: 'absolute', bottom: 10 }}
+								>
+									<MaterialIcons name='delete' size={28} color='black' />
+								</TouchableOpacity>
 							</View>
-						</View>
+							<Image
+								style={styles.thumbnail}
+								source={{ uri: item.video_thumbnail }}
+							/>
+						</TouchableOpacity>
 					)}
 					keyExtractor={(item) => item.id}
 				/>
@@ -55,6 +84,14 @@ const styles = StyleSheet.create({
 		},
 		shadowOpacity: 0.25,
 		shadowRadius: 3.84,
-		elevation: 5
+		elevation: 5,
+		flexDirection: 'row',
+		justifyContent: 'space-between',
+		alignItems: 'center'
+	},
+	thumbnail: {
+		width: Dimensions.get('window').width / 3,
+		height: Dimensions.get('window').width / 3,
+		borderRadius: 10
 	}
 });
