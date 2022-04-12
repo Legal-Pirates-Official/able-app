@@ -45,7 +45,7 @@ const ReadStories = ({ navigation }) => {
 									style={styles.storyCard}
 								>
 									<View
-										style={{
+										style={{width: Dimensions.get('window').width/2,
 											height: '100%',
 											position: 'relative'
 										}}
@@ -53,15 +53,15 @@ const ReadStories = ({ navigation }) => {
 										<View>
 											<Text
 												style={{
-													fontSize: 25,
+													fontSize: 20,
 													fontWeight: '700',
-													marginBottom: 3
+													marginBottom: 3,
 												}}
 											>
-												{item.video_title}
+												{item.video_title.length > 20?item.video_title.substring(0,20)+'...':item.video_title}
 											</Text>
 											<Text style={{ fontSize: 16, marginBottom: 3 }}>
-												{item.video_description}
+												{item.video_description.length > 50 ?item.video_description.substring(0, 40) + '...' : item.video_description}
 											</Text>
 											<Text>{item.video_type}</Text>
 										</View>
@@ -70,7 +70,7 @@ const ReadStories = ({ navigation }) => {
 												deleteStories(item.id);
 												fetchStories();
 											}}
-											style={{ position: 'absolute', bottom: 10 }}
+											style={{ position: 'relative', bottom: 10,marginTop:10 }}
 										>
 											<MaterialIcons name='delete' size={28} color='black' />
 										</TouchableOpacity>
