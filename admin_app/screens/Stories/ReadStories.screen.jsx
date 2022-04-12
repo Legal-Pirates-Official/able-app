@@ -27,7 +27,7 @@ const ReadStories = ({ navigation }) => {
 
 	useEffect(() => {
 		fetchStories();
-	}, []);
+	}, [stories]);
 
 	return (
 		<View style={{ flex: 1, paddingTop: StatusBar.currentHeight }}>
@@ -105,6 +105,7 @@ const ReadStories = ({ navigation }) => {
 				isModalOpen={isModalOpen}
 				setIsModalOpen={setIsModalOpen}
 				updateDetails={updateDetails}
+				setStories={setStories}
 			/>
 		</View>
 	);
