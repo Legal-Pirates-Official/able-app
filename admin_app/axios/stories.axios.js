@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseUrl = 'http://192.168.0.106:8080/';
+const baseUrl = 'https://able-server.herokuapp.com/';
 
 export const getStories = () => axios.get(`${baseUrl}admin/stories`);
 
@@ -10,8 +10,8 @@ export const getParticularStory = (id) =>
 export const InsertAxiosStories = (values) =>
 	axios.post(`${baseUrl}admin/stories`, values);
 
-export const UpdateStories = (id, values) =>
+export const updateStories = (id, values) =>
 	axios.put(`${baseUrl}admin/stories/${id}`, values);
 
-export const DeleteStories = (id, values) =>
+export const deleteStories = (id, values) =>
 	axios.delete(`${baseUrl}admin/stories/${id}`, values);

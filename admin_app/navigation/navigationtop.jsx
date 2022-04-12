@@ -8,36 +8,36 @@ import {StoriesNavigator} from "./Stories.navigation";
 const Tab = createMaterialTopTabNavigator();
 
 function Topnavigation() {
-    return (
-        <Tab.Navigator
-            tabBarPosition="bottom"
-            screenOptions={({route}) => ({
-                tabBarActiveTintColor: "#e91e63",
-                tabBarLabelStyle: {fontSize: 12},
-                // tabBarIndicator: () => null,
-                tabBarIndicatorContainerStyle: {
-                    borderRadius: 20,
-                    overflow: "hidden",
-                },
-                tabBarIndicatorStyle: {
-                    backgroundColor: "#e91e63",
-                    overflow: "hidden",
-                    top: 0,
-                    height: 4,
-                },
-                tabBarStyle: {
-                    backgroundColor: "powderblue",
-                    width: "85%",
-                    alignSelf: "center",
-                    borderRadius: 20,
-                    marginBottom: 10,
-                    position: "absolute",
-                    bottom: 0,
-                },
-                initialRoute: "Home",
-                tabBarIcon: ({focused, color, size}) => {
-                    let iconName;
-                    let iconsize;
+	return (
+		<Tab.Navigator
+			tabBarPosition='bottom'
+			screenOptions={({ route }) => ({
+				tabBarActiveTintColor: '#e91e63',
+				tabBarLabelStyle: { fontSize: 12 },
+				// tabBarIndicator: () => null,
+				tabBarIndicatorContainerStyle: {
+					borderRadius: 20,
+					overflow: 'hidden'
+				},
+				tabBarIndicatorStyle: {
+					backgroundColor: '#e91e63',
+					overflow: 'hidden',
+					top: 0,
+					height: 4
+				},
+				tabBarStyle: {
+					backgroundColor: 'powderblue',
+					width: '85%',
+					alignSelf: 'center',
+					borderRadius: 20,
+					marginBottom: 10,
+					position: 'absolute',
+					bottom: 0
+				},
+				initialRoute: 'StoriesAdmin',
+				tabBarIcon: ({ focused, color, size }) => {
+					let iconName;
+					let iconsize;
 
                     if (route.name === "Home") {
                         iconName = focused ? "home" : "home";
