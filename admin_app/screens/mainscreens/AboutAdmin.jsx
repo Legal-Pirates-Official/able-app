@@ -153,9 +153,6 @@ const AboutAdmin = ({about}) => {
                                 Pick a photo
                             </Text>
                         </TouchableOpacity>
-                        {/* <TouchableOpacity onPress={handleSubmit}>
-                            <Text style={styles.submitButton}>Submit</Text>
-                        </TouchableOpacity> */}
                         <Button
                             title="submit"
                             onPress={() => {
