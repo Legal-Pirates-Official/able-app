@@ -27,7 +27,7 @@ function Topnavigation() {
 					height: 4
 				},
 				tabBarStyle: {
-					backgroundColor: 'powderblue',
+					backgroundColor: '#81E2D7',
 					width: '85%',
 					alignSelf: 'center',
 					borderRadius: 20,

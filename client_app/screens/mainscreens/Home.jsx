@@ -22,7 +22,7 @@ const Home = ({navigation}) => {
         <SafeAreaView style={styles.container}>
             <ScrollView style={styles.scrollView}>
                 <View style={styles.areaone}>
-                    <Text onPress={() => navigation.navigate("Second")}>
+                    <Text style={styles.rajesh} onPress={() => navigation.navigate("Second")}>
                         Dr.Rajesh Fernando
                     </Text>
                 </View>
@@ -64,7 +64,7 @@ const Home = ({navigation}) => {
                 <StatusBar
                     barStyle="dark-content"
                     hidden={false}
-                    backgroundColor="#FDD460"
+                    backgroundColor="#81E2D7"
                     translucent={true}
                 />
             </ScrollView>
@@ -75,7 +75,7 @@ const Home = ({navigation}) => {
 const styles = StyleSheet.create({
     container: {
         paddingTop: StatusBar.currentHeight,
-        backgroundColor: "#000",
+        backgroundColor: "#1A2026",
         paddingBottom: 50,
     },
     scrollView: {
@@ -85,13 +85,12 @@ const styles = StyleSheet.create({
         height: 250,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "#FDD460",
+        backgroundColor: "#81E2D7",
     },
     areatwo: {
         height: height / 2,
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: "#FDD460",
     },
     abouttitle: {
         color: "#fff",
@@ -108,6 +107,10 @@ const styles = StyleSheet.create({
     abouttext: {
         color: "#fff",
     },
+    rajesh:{
+        color: "#000",
+        fontSize: 30,
+    }
 });
 
 export default Home;

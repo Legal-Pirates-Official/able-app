@@ -9,18 +9,23 @@ import {
 	StatusBar,
 	Dimensions,
 	Modal,
-	Button
+	Button,
+	Picker
 } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import * as ImagePicker from 'expo-image-picker';
-import { updateOrInsertStories } from '../../axios/stories.axios';
+import { updateOrInsertStories, getStories } from '../../axios/stories.axios';
 
-const StoryDetails = ({ isModalOpen, setIsModalOpen, updateDetails }) => {
+const StoryDetails = ({
+	isModalOpen,
+	setIsModalOpen,
+	updateDetails,
+	setStories
+}) => {
 	const [selectedImage, setSelectedImage] = useState(null);
 	const [photo, setPhoto] = useState('');
-	const [stories, setStories] = useState([]);
 
 	const pickImage = async () => {
 		let result = await ImagePicker.launchImageLibraryAsync({
@@ -72,12 +77,12 @@ const StoryDetails = ({ isModalOpen, setIsModalOpen, updateDetails }) => {
 		>
 			<Formik
 				initialValues={{
-					title: '',
-					description: '',
-					video_url: ''
+					title: updateDetails ? updateDetails.video_title : '',
+					description: updateDetails ? updateDetails.video_description : '',
+					video_url: updateDetails ? updateDetails.video_url : '',
+					video_type: updateDetails ? updateDetails.video_type : ''
 				}}
 				onSubmit={(values, actions) => {
-					console.log(values);
 					updateOrInsertStories(
 						values,
 						updateDetails ? updateDetails.id : null,
@@ -88,6 +93,9 @@ const StoryDetails = ({ isModalOpen, setIsModalOpen, updateDetails }) => {
 						setPhoto('');
 						setSelectedImage(null);
 						updateDetails(null);
+						getStories().then((res) => {
+							setStories(res.data);
+						});
 					});
 				}}
 				validationSchema={
@@ -113,9 +121,7 @@ const StoryDetails = ({ isModalOpen, setIsModalOpen, updateDetails }) => {
 									style={styles.inputTag}
 									onBlur={handleBlur('title')}
 									onChangeText={handleChange('title')}
-									value={
-										updateDetails ? updateDetails.video_title : values.title
-									}
+									value={values.title}
 								/>
 							</View>
 							<View style={styles.inputView}>
@@ -126,11 +132,7 @@ const StoryDetails = ({ isModalOpen, setIsModalOpen, updateDetails }) => {
 									style={styles.textInput}
 									onBlur={handleBlur('description')}
 									onChangeText={handleChange('description')}
-									value={
-										updateDetails
-											? updateDetails.video_description
-											: values.description
-									}
+									value={values.description}
 								/>
 							</View>
 							<View style={styles.inputView}>
@@ -141,9 +143,7 @@ const StoryDetails = ({ isModalOpen, setIsModalOpen, updateDetails }) => {
 									style={styles.textInput}
 									onBlur={handleBlur('video_url')}
 									onChangeText={handleChange('video_url')}
-									value={
-										updateDetails ? updateDetails.video_url : values.video_url
-									}
+									value={values.video_url}
 								/>
 							</View>
 							<View style={styles.inputView}>
@@ -161,6 +161,14 @@ const StoryDetails = ({ isModalOpen, setIsModalOpen, updateDetails }) => {
 									/>
 								)}
 							</View>
+							<Picker
+								selectedValue={values.video_type}
+								onValueChange={handleChange('video_type')}
+							>
+								<Picker.Item label='Select Category' value={null} />
+								<Picker.Item label='Mini Clip' value='Mini clip' />
+								<Picker.Item label='Youtube' value='Youtube' />
+							</Picker>
 							<Button
 								style={styles.buttonText}
 								onPress={() => handleSubmit()}
