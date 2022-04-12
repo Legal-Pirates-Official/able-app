@@ -10,62 +10,103 @@ import {
 	Dimensions
 } from 'react-native';
 import React, { useEffect, useState } from 'react';
-import { MaterialIcons } from '@expo/vector-icons';
+import { AntDesign, MaterialIcons } from '@expo/vector-icons';
+
 import { getStories, deleteStories } from '../../axios/stories.axios';
+import StoryDetails from './StoryDetails.modal';
 
 const ReadStories = ({ navigation }) => {
 	const [stories, setStories] = useState([]);
+	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [updateDetails, setUpdateDetails] = useState(null);
 
-	useEffect(() => {
+	const fetchStories = () =>
 		getStories().then((res) => {
 			setStories(res.data);
 		});
+
+	useEffect(() => {
+		fetchStories();
 	}, []);
 
 	return (
-		<ScrollView>
-			<View style={{ flex: 1, paddingTop: StatusBar.currentHeight }}>
-				<FlatList
-					data={stories}
-					renderItem={({ item }) => (
-						<TouchableOpacity
-							onPress={() => navigation.push('Update', { item })}
-							style={styles.storyCard}
-						>
-							<View
-								style={{
-									height: '100%',
-									position: 'relative'
-								}}
-							>
-								<View>
-									<Text
-										style={{ fontSize: 25, fontWeight: '700', marginBottom: 3 }}
-									>
-										{item.video_title}
-									</Text>
-									<Text style={{ fontSize: 16, marginBottom: 3 }}>
-										{item.video_description}
-									</Text>
-									<Text>{item.video_type}</Text>
-								</View>
+		<View style={{ flex: 1, paddingTop: StatusBar.currentHeight }}>
+			{stories.length ? (
+				<ScrollView>
+					<View style={{ flex: 1 }}>
+						<FlatList
+							data={stories}
+							renderItem={({ item }) => (
 								<TouchableOpacity
-									onPress={() => deleteStories(item.id)}
-									style={{ position: 'absolute', bottom: 10 }}
+									onPress={() => {
+										setUpdateDetails(item);
+										setIsModalOpen(true);
+									}}
+									style={styles.storyCard}
 								>
-									<MaterialIcons name='delete' size={28} color='black' />
+									<View
+										style={{
+											height: '100%',
+											position: 'relative'
+										}}
+									>
+										<View>
+											<Text
+												style={{
+													fontSize: 25,
+													fontWeight: '700',
+													marginBottom: 3
+												}}
+											>
+												{item.video_title}
+											</Text>
+											<Text style={{ fontSize: 16, marginBottom: 3 }}>
+												{item.video_description}
+											</Text>
+											<Text>{item.video_type}</Text>
+										</View>
+										<TouchableOpacity
+											onPress={() => {
+												deleteStories(item.id);
+												fetchStories();
+											}}
+											style={{ position: 'absolute', bottom: 10 }}
+										>
+											<MaterialIcons name='delete' size={28} color='black' />
+										</TouchableOpacity>
+									</View>
+									<Image
+										style={styles.thumbnail}
+										source={{ uri: item.video_thumbnail }}
+									/>
 								</TouchableOpacity>
-							</View>
-							<Image
-								style={styles.thumbnail}
-								source={{ uri: item.video_thumbnail }}
-							/>
-						</TouchableOpacity>
-					)}
-					keyExtractor={(item) => item.id}
-				/>
-			</View>
-		</ScrollView>
+							)}
+							keyExtractor={(item) => item.id}
+						/>
+					</View>
+				</ScrollView>
+			) : (
+				<View
+					style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
+				>
+					<Text>No data found.</Text>
+				</View>
+			)}
+			<TouchableOpacity
+				onPress={() => {
+					setUpdateDetails(null);
+					setIsModalOpen(true);
+				}}
+				style={{ position: 'absolute', bottom: 80, right: 30, elevation: 5 }}
+			>
+				<AntDesign name='pluscircle' size={50} color='#00b5ec' />
+			</TouchableOpacity>
+			<StoryDetails
+				isModalOpen={isModalOpen}
+				setIsModalOpen={setIsModalOpen}
+				updateDetails={updateDetails}
+			/>
+		</View>
 	);
 };
 

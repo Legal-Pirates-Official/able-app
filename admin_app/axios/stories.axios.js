@@ -7,11 +7,11 @@ export const getStories = () => axios.get(`${baseUrl}admin/stories`);
 export const getParticularStory = (id) =>
 	axios.get(`${baseUrl}admin/stories/${id}`);
 
-export const InsertAxiosStories = (values) =>
-	axios.post(`${baseUrl}admin/stories`, values);
-
-export const updateStories = (id, values) =>
-	axios.put(`${baseUrl}admin/stories/${id}`, values);
+export const updateOrInsertStories = (values, id, photo) =>
+	axios.post(
+		id ? `${baseUrl}admin/stories/${id}` : `${baseUrl}admin/stories/`,
+		{ values, photo }
+	);
 
 export const deleteStories = (id, values) =>
 	axios.delete(`${baseUrl}admin/stories/${id}`, values);

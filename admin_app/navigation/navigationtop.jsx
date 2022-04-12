@@ -1,9 +1,8 @@
-import {createMaterialTopTabNavigator} from "@react-navigation/material-top-tabs";
-import Ionicons from "react-native-vector-icons/Ionicons";
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { AntDesign } from '@expo/vector-icons';
 
-import AboutAdmin from "../screens/mainscreens/AboutAdmin";
-import InsertStories from "../screens/Stories/InsertStories.screen";
-import {StoriesNavigator} from "./Stories.navigation";
+import AboutAdmin from '../screens/mainscreens/AboutAdmin';
+import ReadStories from '../screens/Stories/ReadStories.screen';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -34,54 +33,35 @@ function Topnavigation() {
 					position: 'absolute',
 					bottom: 0
 				},
-				initialRoute: 'StoriesAdmin',
+				initialRoute: 'Stories',
 				tabBarIcon: ({ focused, color, size }) => {
 					let iconName;
 					let iconsize;
 
-                    if (route.name === "Home") {
-                        iconName = focused ? "home" : "home";
-                        iconsize = focused ? 25 : 20;
-                    } else if (route.name === "Stories") {
-                        iconName = focused ? "stories" : "stories";
-                        iconsize = focused ? 25 : 20;
-                    } else if (route.name === "About") {
-                        iconName = focused
-                            ? "information-outline"
-                            : "information-outline";
-                        iconsize = focused ? 25 : 20;
-                    } else if (route.name === "profile") {
-                        iconName = focused
-                            ? "people-outline"
-                            : "people-outline";
-                        iconsize = focused ? 25 : 20;
-                    }
+					if (route.name === 'About') {
+						iconName = focused ? 'profile' : 'profile';
+					} else if (route.name === 'Stories') {
+						iconName = focused ? 'clockcircle' : 'clockcircle';
+					}
 
-                    // You can return any component that you like here!
-                    return (
-                        <Ionicons
-                            name={iconName}
-                            size={iconsize}
-                            color={color}
-                        />
-                    );
-                },
-                tabBarActiveTintColor: "tomato",
-                tabBarInactiveTintColor: "gray",
-                lazy: true,
-                tabBarShowLabel: true,
-            })}
-            tabBarOptions={{
-                onTabPress: (e) => {
-                    console.log(e);
-                },
-            }}
-        >
-            <Tab.Screen name="AboutAdmin" component={AboutAdmin} />
-            <Tab.Screen name="StoriesAdmin" component={StoriesNavigator} />
-            <Tab.Screen name="Insert" component={InsertStories} />
-        </Tab.Navigator>
-    );
+					// You can return any component that you like here!
+					return <AntDesign name={iconName} size={20} color={color} />;
+				},
+				tabBarActiveTintColor: 'tomato',
+				tabBarInactiveTintColor: 'gray',
+				lazy: true,
+				tabBarShowLabel: false
+			})}
+			tabBarOptions={{
+				onTabPress: (e) => {
+					console.log(e);
+				}
+			}}
+		>
+			<Tab.Screen name='About' component={AboutAdmin} />
+			<Tab.Screen name='Stories' component={ReadStories} />
+		</Tab.Navigator>
+	);
 }
 
 export default Topnavigation;
