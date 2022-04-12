@@ -5,10 +5,10 @@ const baseUrl = 'https://able-server.herokuapp.com/';
 
 export const getStories = () => axios.get(`${baseUrl}admin/stories`);
 
-export const updateOrInsertStories = (values, id, photo) => {
+export const updateOrInsertStories = (values, id, photo, video) => {
 	return axios.post(
 		id ? `${baseUrl}admin/stories/${id}` : `${baseUrl}admin/stories/`,
-		{ values, photo }
+		{ values, photo, video }
 	);
 };
 export const deleteStories = (id, values) =>
