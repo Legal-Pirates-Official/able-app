@@ -1,8 +1,9 @@
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, Dimensions } from 'react-native'
 import React from 'react'
 import griddata from './griddata'
 import { FlatGrid } from 'react-native-super-grid';
 
+const { width, height } = Dimensions.get('window')
 
 const Gridcont = () => {
   return (
@@ -37,13 +38,13 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     padding: 10,
     height: 150,
-    width: 190,
+    width: width/2.2,
   },
   itemName: {
     fontSize: 120,
     color: '#fff',
     alignSelf: 'center',
-    fontWeight: '600',
+    fontWeight: 'bold',
     position: 'absolute',
     opacity: 0.3,
   },

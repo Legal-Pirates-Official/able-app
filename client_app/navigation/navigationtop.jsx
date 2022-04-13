@@ -18,6 +18,7 @@ function Topnavigation() {
             tabBarPosition="bottom"
             screenOptions={({route}) => ({
                 tabBarActiveTintColor: "#e91e63",
+                swipeEnabled: false,
                 tabBarLabelStyle: {fontSize: 12},
                 // tabBarIndicator: () => null,
                 tabBarIndicatorContainerStyle: {
