@@ -103,6 +103,7 @@ const StoryDetails = ({
 						setIsModalOpen(false);
 						actions.resetForm();
 						setPhoto('');
+						setVideo('');
 						setSelectedImage(null);
 						updateDetails(null);
 						getStories().then((res) => {
