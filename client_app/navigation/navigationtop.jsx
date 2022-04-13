@@ -18,6 +18,7 @@ function Topnavigation() {
             tabBarPosition="bottom"
             screenOptions={({route}) => ({
                 tabBarActiveTintColor: "#e91e63",
+                swipeEnabled: false,
                 tabBarLabelStyle: {fontSize: 12},
                 // tabBarIndicator: () => null,
                 tabBarIndicatorContainerStyle: {
@@ -31,7 +32,7 @@ function Topnavigation() {
                     height: 4,
                 },
                 tabBarStyle: {
-                    backgroundColor: "powderblue",
+                    backgroundColor: "#81E2D7",
                     width: "85%",
                     alignSelf: "center",
                     borderRadius: 20,

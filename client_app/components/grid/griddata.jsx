@@ -1,8 +1,8 @@
 const griddata = [
-    { name: 'TURQUOISE',colan: ":", code: '#1abc9c' },
-    { name: 'EMERALD',colan: ":", code: '#2ecc71' },
-    { name: 'PETER RIVER',colan: ":", code: '#3498db' },
-    { name: 'AMETHYST',colan: ":", code: '#9b59b6' },
+    { name: 'A', code: 'ATTITUDE', codetwo: "ALTITUDE" },
+    { name: 'B', code: 'BELIVE', codetwo: "BUILDING" },
+    { name: 'L', code: 'LISTENING', codetwo: "LEARN TO LEAD"},
+    { name: 'E', code: 'EXCELENCE', codetwo: "EXUBERANCE" },
   ]
 
 export default griddata
