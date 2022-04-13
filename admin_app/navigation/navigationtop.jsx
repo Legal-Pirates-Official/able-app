@@ -5,6 +5,7 @@ import AboutAdmin from '../screens/mainscreens/AboutAdmin';
 import ReadStories from '../screens/Stories/ReadStories.screen';
 import Meet from '../screens/mainscreens/meet';
 import ShowRequests from '../screens/mainscreens/ShowRequests';
+import Homeabout from '../screens/mainscreens/Homeabout'
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -45,7 +46,9 @@ function Topnavigation() {
 					} else if (route.name === 'Stories') {
 						iconName = focused ? 'clockcircle' : 'clockcircle';
 					}
-
+					else if (route.name === 'homeabout') {
+						iconName = focused ? 'profile' : 'profile';
+					}
 					// You can return any component that you like here!
 					return <AntDesign name={iconName} size={20} color={color} />;
 				},
@@ -60,6 +63,7 @@ function Topnavigation() {
 				}
 			}}
 		>
+			<Tab.Screen name='homeabout' component={Homeabout} />
 			<Tab.Screen name='About' component={AboutAdmin} />
 			<Tab.Screen name='Stories' component={ReadStories} />
 			<Tab.Screen name='Meet' component={Meet} />
