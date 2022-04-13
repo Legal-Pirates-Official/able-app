@@ -51,8 +51,15 @@ const Interaction = () => {
     alignItems: "center",
     flex: 1,
     paddingTop: 60,
+    
     }}>
-      <TouchableOpacity onPress={()=>setDatePickerVisibility(true)}><Text style={styles.text}>{selectedTime? `${dates} ${selectedTime.time_slot}-${selectedTime.time_slot_am_pm}`:'Pick a Date'}</Text></TouchableOpacity>
+      <TouchableOpacity style={{
+        backgroundColor: '#00b5ec',
+        padding:10,
+        paddingHorizontal:20,
+        borderRadius: 15,
+        marginTop: 20,
+      }} onPress={()=>setDatePickerVisibility(true)}><Text style={styles.text}>{selectedTime? `${dates} ${selectedTime.time_slot}-${selectedTime.time_slot_am_pm}`:'Pick a Date'}</Text></TouchableOpacity>
       
      {isDatePickerVisible ? <DateTimePickerModal
         isVisible={isDatePickerVisible}
