@@ -1,33 +1,91 @@
-import { View, Text, StyleSheet,Dimensions, StatusBar } from 'react-native'
+import { View, Text, StyleSheet,Dimensions, StatusBar, TouchableOpacity } from 'react-native'
 import React from 'react'
 import Form from '../../components/Form'
+import AboutHome from '../../components/about.home'
 
+const {height, width} = Dimensions.get('window');
 
-const Homeabout = () => {
+const Homeabout = ({navigation}) => {
   return (
-    <View style={styles.maincontainer}>
-            <View style={styles.title}>
-                <Text style={styles.titletext}>HOME ABOUT</Text>
-            </View>
-            <Form />
+    <View style={styles.homecont}>
+        <Text style={styles.title}>HOME</Text>
+        <TouchableOpacity style={styles.aboutbtn} onPress={() => navigation.navigate("Abouthome")}>
+            <Text style={styles.text}>About Able</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.eventsbtn}>
+            <Text style={styles.text}>Live Events</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.youtubebtn}>
+            <Text style={styles.text}>Youtube Video</Text>
+        </TouchableOpacity>
     </View>
   )
-}
+};
 
 export default Homeabout
 
 const styles = StyleSheet.create({
-    maincontainer:{
+    homecont:{
         paddingTop: StatusBar.currentHeight,
         justifyContent: "center",
         flex:1,
     },
+    aboutbtn:{
+        width: width/1.5,
+        height: height/8,
+        backgroundColor: '#00BFFF',
+        justifyContent: "center",
+        alignItems: "center",
+        alignSelf: "center",
+        borderRadius: 20,
+        marginBottom: 20,
+        shadowColor: "#000",
+        shadowOffset: { width: 3, height: 5 },
+        shadowOpacity: 0.8,
+        shadowRadius: 6,
+        elevation: 5,
+    },
+    eventsbtn:{
+        width: width/1.5,
+        height: height/8,
+        backgroundColor: '#a6a6a6',
+        justifyContent: "center",
+        alignItems: "center",
+        alignSelf: "center",
+        borderRadius: 20,
+        marginBottom: 20,
+        shadowColor: "#000",
+        shadowOffset: { width: 3, height: 5 },
+        shadowOpacity: 0.8,
+        shadowRadius: 6,
+        elevation: 5,
+    },
+    youtubebtn:{
+        width: width/1.5,
+        height: height/8,
+        backgroundColor: '#a6a6a6',
+        justifyContent: "center",
+        alignItems: "center",
+        alignSelf: "center",
+        borderRadius: 20,
+        shadowColor: "#000",
+        shadowOffset: { width: 3, height: 5 },
+        shadowOpacity: 0.8,
+        shadowRadius: 6,
+        elevation: 5,
+    },
     title:{
         alignSelf: "center",
         marginBottom: 40,
-    },
-    titletext:{
         fontSize: 40,
         fontWeight: "bold",
+        borderBottomColor: '#000',
+        borderBottomWidth: 3,
+        borderRadius: 20,
+    },
+    text:{
+        fontSize: 20,
+        fontWeight: "bold",
+        color: '#fff',
     }
 })
