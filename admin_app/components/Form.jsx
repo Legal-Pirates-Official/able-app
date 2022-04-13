@@ -18,6 +18,7 @@ const Form = () => {
             onBlur={handleBlur("email")}
             value={values.email}
             style={styles.textInput}
+            multiline={true}
           />
           <View>
             <Button onPress={handleSubmit} title="Submit" />

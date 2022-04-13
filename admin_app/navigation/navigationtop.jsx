@@ -6,6 +6,7 @@ import ReadStories from '../screens/Stories/ReadStories.screen';
 import Meet from '../screens/mainscreens/meet';
 import ShowRequests from '../screens/mainscreens/ShowRequests';
 import Homeabout from '../screens/mainscreens/Homeabout'
+import Navigation from './navigation'
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -46,7 +47,7 @@ function Topnavigation() {
 					} else if (route.name === 'Stories') {
 						iconName = focused ? 'clockcircle' : 'clockcircle';
 					}
-					else if (route.name === 'homeabout') {
+					else if (route.name === 'homenavigator') {
 						iconName = focused ? 'profile' : 'profile';
 					}
 					// You can return any component that you like here!
@@ -63,7 +64,7 @@ function Topnavigation() {
 				}
 			}}
 		>
-			<Tab.Screen name='homeabout' component={Homeabout} />
+			<Tab.Screen name='homenavigator' component={Navigation} />
 			<Tab.Screen name='About' component={AboutAdmin} />
 			<Tab.Screen name='Stories' component={ReadStories} />
 			<Tab.Screen name='Meet' component={Meet} />
