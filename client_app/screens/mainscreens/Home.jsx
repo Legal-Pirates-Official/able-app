@@ -86,7 +86,7 @@ const Home = ({ navigation }) => {
             <Gridcont />
           </View>
         </View>
-        <Swipercontainer liveevent={yt} title={"Youtube videos"} />
+        <Swipercontainer liveevent={liveevent} title={"Youtube videos"} />
         <StatusBar
           barStyle="dark-content"
           hidden={false}
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
   },
   linearGradient: {
     flex: 1,
-    height: 500,
+    height: 300,
    
   },
   scrollView: {

@@ -18,6 +18,7 @@ const AwardsComponents = () => {
 
     useEffect(async () => {
         await getAbout().then((res) => {
+            console.log(res, "awards");
             setAwards(res.data);
         });
     }, []);

@@ -6,6 +6,7 @@ import Swipercont from "./swiper";
 const {width, height} = Dimensions.get("window");
 
 const Swipercontainer = (props) => {
+    
     const {liveevent, title} = props;
     return (
         <View style={styles.areatwo}>
