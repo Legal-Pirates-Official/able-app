@@ -6,13 +6,16 @@ const axios = require("axios");
 //     card_description,
 //     card_image,
 // ];
-const baseURL = "http://192.168.1.7:3000";
+const baseURL = "http://192.168.0.103:8080";
 
-export const getAbout = async (values) => await axios.get(`${baseURL}/about`);
+export const getAbout = async (values) =>{ 
+    console.log('k');
+   return await axios.get(`${baseURL}/admin/about`)
+};
 
 export const postAbout = async (values, photo) => {
     try {
-        return await axios.post(`${baseURL}/about`, {values, photo});
+        return await axios.post(`${baseURL}/admin/about`, {values, photo});
     } catch (error) {
         console.log(error);
     }

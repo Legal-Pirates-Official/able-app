@@ -29,8 +29,11 @@ const styles = StyleSheet.create({
         width: width - 30,
     },
     abouthead: {
-        color: "#fff",
-        fontSize: 30,
+        color: "#EEEEEE",
+        fontSize: 26,
         fontWeight: "bold",
+        paddingBottom: 10,
+        paddingLeft: 20,
+
     },
 });
