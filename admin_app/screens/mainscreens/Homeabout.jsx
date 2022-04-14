@@ -12,10 +12,10 @@ const Homeabout = ({navigation}) => {
         <TouchableOpacity style={styles.aboutbtn} onPress={() => navigation.navigate("Abouthome")}>
             <Text style={styles.text}>About Able</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.eventsbtn}>
+        <TouchableOpacity style={styles.eventsbtn} onPress={() => navigation.navigate("LiveEvents")}>
             <Text style={styles.text}>Live Events</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.youtubebtn}>
+        <TouchableOpacity style={styles.youtubebtn} onPress={() => navigation.navigate("Youtubevideo")}>
             <Text style={styles.text}>Youtube Video</Text>
         </TouchableOpacity>
     </View>
