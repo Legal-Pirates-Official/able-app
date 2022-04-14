@@ -1,13 +1,8 @@
 import {
 	StyleSheet,
-	Text,
-	View,
-	FlatList,
 	ScrollView,
 	Dimensions,
-	StatusBar,
-	TouchableOpacity,
-	Image
+	StatusBar
 } from 'react-native';
 import React, { useRef, useState, useEffect } from 'react';
 import { Video } from 'expo-av';
@@ -22,7 +17,7 @@ const Stories = ({ navigation }) => {
 	useEffect(() => {
 		getStories().then((res) => {
 			setMiniClips(res.data.filter((clip) => clip.video_type === 'miniclip'));
-			setYoutubeClips(res.data.filter((clip) => clip.video_type === 'youtube'));
+			setYoutubeClips(res.data.filter((clip) => clip.video_type === 'Youtube'));
 		});
 	}, []);
 

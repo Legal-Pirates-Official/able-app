@@ -25,17 +25,30 @@ const StoryDetails = ({
 	setStories
 }) => {
 	const [selectedImage, setSelectedImage] = useState(null);
+	const [selectedVideo, setSelectedVideo] = useState(
+		updateDetails ? updateDetails.video_url : null
+	);
 	const [photo, setPhoto] = useState('');
+	const [video, setVideo] = useState('');
 
-	const pickImage = async () => {
+	const pickImage = async (pickerFor) => {
 		let result = await ImagePicker.launchImageLibraryAsync({
 			allowsEditing: true,
+			mediaTypes:
+				pickerFor == 'thumbnail'
+					? ImagePicker.MediaTypeOptions.Images
+					: ImagePicker.MediaTypeOptions.Videos,
 			aspect: [4, 3],
 			base64: true
 		});
 
 		if (!result.cancelled) {
-			setSelectedImage({ localUri: result.uri });
+			if (pickerFor == 'thumbnail') {
+				setSelectedImage({ localUri: result.uri });
+			} else {
+				setSelectedVideo({ localUri: result.uri });
+			}
+
 			let base64Img = `data:image/jpg;base64,${result.base64}`;
 			let data = {
 				file: base64Img,
@@ -51,7 +64,11 @@ const StoryDetails = ({
 				.then(async (r) => {
 					let data = await r.json();
 					// await uploadPhoto(data.secure_url);
-					setPhoto(data.secure_url);
+					if (pickerFor == 'thumbnail') {
+						setPhoto(data.secure_url);
+					} else {
+						setVideo(data.secure_url);
+					}
 				})
 				.catch((err) => console.log(err));
 		}
@@ -60,13 +77,13 @@ const StoryDetails = ({
 	const storiesInsertSchema = Yup.object().shape({
 		title: Yup.string().required(),
 		description: Yup.string().required(),
-		video_url: Yup.string().required()
+		video_type: Yup.string().required()
 	});
 
 	const storiesUpdateSchema = Yup.object().shape({
 		title: Yup.string(),
 		description: Yup.string(),
-		video_url: Yup.string()
+		video_type: Yup.string()
 	});
 
 	return (
@@ -79,19 +96,21 @@ const StoryDetails = ({
 				initialValues={{
 					title: updateDetails ? updateDetails.video_title : '',
 					description: updateDetails ? updateDetails.video_description : '',
-					video_url: updateDetails ? updateDetails.video_url : '',
 					video_type: updateDetails ? updateDetails.video_type : ''
 				}}
 				onSubmit={(values, actions) => {
+					console.log(values);
 					updateOrInsertStories(
 						values,
 						updateDetails ? updateDetails.id : null,
-						photo.length > 0 ? photo : null
+						photo.length > 0 ? photo : null,
+						video.length > 0 ? video : null
 					).then((res) => {
 						setIsModalOpen(false);
-						actions.resetForm();
 						setPhoto('');
+						setVideo('');
 						setSelectedImage(null);
+						setSelectedVideo(null);
 						updateDetails(null);
 						getStories().then((res) => {
 							setStories(res.data);
@@ -111,7 +130,7 @@ const StoryDetails = ({
 					touched
 				}) => (
 					<ScrollView style={styles.scrollView}>
-						<View style={styles.container}>
+						<View style={{ flex: 1 }}>
 							<Text style={styles.textHeading}>Insert Stories</Text>
 							<View style={styles.inputView}>
 								<Text style={styles.inputlabel}>Title</Text>
@@ -135,22 +154,59 @@ const StoryDetails = ({
 									value={values.description}
 								/>
 							</View>
+							<Picker
+								selectedValue={values.video_type}
+								onValueChange={handleChange('video_type')}
+							>
+								<Picker.Item label='Select Category' value='' />
+								<Picker.Item label='Mini Clip' value='Mini clip' />
+								<Picker.Item label='Youtube' value='Youtube' />
+							</Picker>
+							{values.video_type === 'Youtube' && (
+								<View style={styles.inputView}>
+									<Text style={styles.inputlabel}>Video Url</Text>
+									<TextInput
+										name='video_url'
+										multiline={true}
+										style={styles.textInput}
+										onBlur={handleBlur('video_url')}
+										onChangeText={(text) => setVideo(text)}
+										value={video}
+									/>
+								</View>
+							)}
+							{values.video_type === 'Mini clip' && (
+								<View style={styles.inputView}>
+									<TouchableOpacity
+										style={styles.button}
+										onPress={() => pickImage('video')}
+									>
+										<Text style={[styles.buttonTextPicture]}>
+											{selectedVideo ? 'Video selected' : 'Select Video'}
+										</Text>
+									</TouchableOpacity>
+									{/* {selectedImage && (
+										<Image
+											source={{
+												uri: updateDetails
+													? updateDetails.video_thumbnail
+													: selectedImage.localUri
+											}}
+											style={styles.thumbnail}
+										/>
+									)} */}
+								</View>
+							)}
 							<View style={styles.inputView}>
-								<Text style={styles.inputlabel}>Video Url</Text>
-								<TextInput
-									name='video_url'
-									multiline={true}
-									style={styles.textInput}
-									onBlur={handleBlur('video_url')}
-									onChangeText={handleChange('video_url')}
-									value={values.video_url}
-								/>
-							</View>
-							<View style={styles.inputView}>
-								<TouchableOpacity style={styles.button} onPress={pickImage}>
-									<Text style={[styles.buttonTextPicture]}>Select Image</Text>
+								<TouchableOpacity
+									style={styles.button}
+									onPress={() => pickImage('thumbnail')}
+								>
+									<Text style={[styles.buttonTextPicture]}>
+										{selectedImage ? 'Image Selected' : 'Select Thumbnail'}
+									</Text>
 								</TouchableOpacity>
-								{selectedImage && (
+								{/* {selectedImage && (
 									<Image
 										source={{
 											uri: updateDetails
@@ -159,16 +215,8 @@ const StoryDetails = ({
 										}}
 										style={styles.thumbnail}
 									/>
-								)}
+								)} */}
 							</View>
-							<Picker
-								selectedValue={values.video_type}
-								onValueChange={handleChange('video_type')}
-							>
-								<Picker.Item label='Select Category' value={null} />
-								<Picker.Item label='Mini Clip' value='Mini clip' />
-								<Picker.Item label='Youtube' value='Youtube' />
-							</Picker>
 							<Button
 								style={styles.buttonText}
 								onPress={() => handleSubmit()}

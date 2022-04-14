@@ -13,6 +13,7 @@ import {
 import React, { useState, useEffect } from 'react';
 
 const YoutubeVideos = ({ clips }) => {
+	console.log(clips);
 	return (
 		<View>
 			<Text style={styles.textHeader}>YoutubeVideos</Text>
@@ -36,7 +37,7 @@ const YoutubeVideos = ({ clips }) => {
 								>
 									<Image
 										source={{
-											uri: clip.image
+											uri: clip.video_thumbnail
 										}}
 										style={styles.storyThumbnail}
 									/>

@@ -9,7 +9,8 @@ import {
     StatusBar,
 } from "react-native";
 import React, {useEffect} from "react";
-import liveevent from "../../data/liveevent.data";
+import {liveevent,yt} from "../../data/liveevent.data";
+
 import Swipercontainer from "../../components/swipercontainer";
 import Gridcont from "../../components/grid/grid";
 
@@ -58,7 +59,7 @@ const Home = ({navigation}) => {
                     </View>
                 </View>
                 <Swipercontainer
-                    liveevent={liveevent}
+                    liveevent={yt}
                     title={"Youtube videos"}
                 />
                 <StatusBar
