@@ -68,3 +68,49 @@ export const sendMail = async (email,name,date,timeslot,slots) => {
         console.log(error);
     }
 };
+
+
+export const mailer = async (email,timeslot) => {
+    return await axios.post(`${baseURL}/admin/mail/`,{
+        email,
+        timeslot
+    },(err,res)=> {
+        if(err) {
+            console.log(err);
+        }
+        else {
+            console.log(res);
+        }
+    })
+}
+
+export const meetLinkChange = async (meetLink,email,password) => {
+    console.log(meetLink,email,password,'p');
+    return await axios.post(`${baseURL}/admin/meetlink/`,{
+        meetLink,
+        email,
+        password
+    },(err,res)=> {
+        if(err) {
+            console.log(err);
+        }
+        else {
+            console.log(res);
+        }
+    })
+}
+
+
+export const rejectRequest = async (email) => {
+
+    return await axios.post(`${baseURL}/admin/reject/`,{
+        email
+    },(err,res)=> {
+        if(err) {
+            console.log(err);
+        }
+        else {
+            console.log(res);
+        }
+    })
+}
