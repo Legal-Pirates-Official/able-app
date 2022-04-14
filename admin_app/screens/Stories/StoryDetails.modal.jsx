@@ -25,6 +25,9 @@ const StoryDetails = ({
 	setStories
 }) => {
 	const [selectedImage, setSelectedImage] = useState(null);
+	const [selectedVideo, setSelectedVideo] = useState(
+		updateDetails ? updateDetails.video_url : null
+	);
 	const [photo, setPhoto] = useState('');
 	const [video, setVideo] = useState('');
 
@@ -40,7 +43,12 @@ const StoryDetails = ({
 		});
 
 		if (!result.cancelled) {
-			setSelectedImage({ localUri: result.uri });
+			if (pickerFor == 'thumbnail') {
+				setSelectedImage({ localUri: result.uri });
+			} else {
+				setSelectedVideo({ localUri: result.uri });
+			}
+
 			let base64Img = `data:image/jpg;base64,${result.base64}`;
 			let data = {
 				file: base64Img,
@@ -69,14 +77,12 @@ const StoryDetails = ({
 	const storiesInsertSchema = Yup.object().shape({
 		title: Yup.string().required(),
 		description: Yup.string().required(),
-		video_url: Yup.string().required(),
 		video_type: Yup.string().required()
 	});
 
 	const storiesUpdateSchema = Yup.object().shape({
 		title: Yup.string(),
 		description: Yup.string(),
-		video_url: Yup.string(),
 		video_type: Yup.string()
 	});
 
@@ -90,10 +96,10 @@ const StoryDetails = ({
 				initialValues={{
 					title: updateDetails ? updateDetails.video_title : '',
 					description: updateDetails ? updateDetails.video_description : '',
-					video_url: updateDetails ? updateDetails.video_url : '',
 					video_type: updateDetails ? updateDetails.video_type : ''
 				}}
 				onSubmit={(values, actions) => {
+					console.log(values);
 					updateOrInsertStories(
 						values,
 						updateDetails ? updateDetails.id : null,
@@ -101,10 +107,10 @@ const StoryDetails = ({
 						video.length > 0 ? video : null
 					).then((res) => {
 						setIsModalOpen(false);
-						actions.resetForm();
 						setPhoto('');
 						setVideo('');
 						setSelectedImage(null);
+						setSelectedVideo(null);
 						updateDetails(null);
 						getStories().then((res) => {
 							setStories(res.data);
@@ -124,7 +130,7 @@ const StoryDetails = ({
 					touched
 				}) => (
 					<ScrollView style={styles.scrollView}>
-						<View style={styles.container}>
+						<View style={{ flex: 1 }}>
 							<Text style={styles.textHeading}>Insert Stories</Text>
 							<View style={styles.inputView}>
 								<Text style={styles.inputlabel}>Title</Text>
@@ -164,8 +170,8 @@ const StoryDetails = ({
 										multiline={true}
 										style={styles.textInput}
 										onBlur={handleBlur('video_url')}
-										onChangeText={handleChange('video_url')}
-										value={values.video_url}
+										onChangeText={(text) => setVideo(text)}
+										value={video}
 									/>
 								</View>
 							)}
@@ -175,9 +181,11 @@ const StoryDetails = ({
 										style={styles.button}
 										onPress={() => pickImage('video')}
 									>
-										<Text style={[styles.buttonTextPicture]}>Select Video</Text>
+										<Text style={[styles.buttonTextPicture]}>
+											{selectedVideo ? 'Video selected' : 'Select Video'}
+										</Text>
 									</TouchableOpacity>
-									{selectedImage && (
+									{/* {selectedImage && (
 										<Image
 											source={{
 												uri: updateDetails
@@ -186,7 +194,7 @@ const StoryDetails = ({
 											}}
 											style={styles.thumbnail}
 										/>
-									)}
+									)} */}
 								</View>
 							)}
 							<View style={styles.inputView}>
@@ -195,10 +203,10 @@ const StoryDetails = ({
 									onPress={() => pickImage('thumbnail')}
 								>
 									<Text style={[styles.buttonTextPicture]}>
-										Select Thumbnail
+										{selectedImage ? 'Image Selected' : 'Select Thumbnail'}
 									</Text>
 								</TouchableOpacity>
-								{selectedImage && (
+								{/* {selectedImage && (
 									<Image
 										source={{
 											uri: updateDetails
@@ -207,9 +215,8 @@ const StoryDetails = ({
 										}}
 										style={styles.thumbnail}
 									/>
-								)}
+								)} */}
 							</View>
-
 							<Button
 								style={styles.buttonText}
 								onPress={() => handleSubmit()}
