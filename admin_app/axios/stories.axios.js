@@ -8,7 +8,7 @@ export const getStories = () => axios.get(`${baseUrl}admin/stories`);
 export const updateOrInsertStories = (values, id, photo, video) => {
 	return axios.post(
 		id ? `${baseUrl}admin/stories/${id}` : `${baseUrl}admin/stories/`,
-		{ values, photo, video }
+		{ values, photo }
 	);
 };
 export const deleteStories = (id, values) =>

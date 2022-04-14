@@ -17,6 +17,7 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import * as ImagePicker from 'expo-image-picker';
 import { updateOrInsertStories, getStories } from '../../axios/stories.axios';
+import axios from 'axios';
 
 const StoryDetails = ({
 	isModalOpen,
@@ -25,65 +26,30 @@ const StoryDetails = ({
 	setStories
 }) => {
 	const [selectedImage, setSelectedImage] = useState(null);
-	const [selectedVideo, setSelectedVideo] = useState(
-		updateDetails ? updateDetails.video_url : null
-	);
 	const [photo, setPhoto] = useState('');
-	const [video, setVideo] = useState('');
+	const [base64Img, setBase64Img] = useState('');
 
-	const pickImage = async (pickerFor) => {
+	const pickImage = async () => {
 		let result = await ImagePicker.launchImageLibraryAsync({
-			allowsEditing: true,
-			mediaTypes:
-				pickerFor == 'thumbnail'
-					? ImagePicker.MediaTypeOptions.Images
-					: ImagePicker.MediaTypeOptions.Videos,
-			aspect: [4, 3],
-			base64: true
+			mediaTypes: ImagePicker.MediaTypeOptions.Images
 		});
 
 		if (!result.cancelled) {
-			if (pickerFor == 'thumbnail') {
-				setSelectedImage({ localUri: result.uri });
-			} else {
-				setSelectedVideo({ localUri: result.uri });
-			}
-
+			setSelectedImage({ localUri: result.uri });
 			let base64Img = `data:image/jpg;base64,${result.base64}`;
 			let data = {
 				file: base64Img,
 				upload_preset: 'xnjpoohq'
 			};
-			fetch('https://api.cloudinary.com/v1_1/dn3s6sgki/upload', {
-				body: JSON.stringify(data),
-				headers: {
-					'content-type': 'application/json'
-				},
-				method: 'POST'
-			})
-				.then(async (r) => {
-					let data = await r.json();
-					// await uploadPhoto(data.secure_url);
-					if (pickerFor == 'thumbnail') {
-						setPhoto(data.secure_url);
-					} else {
-						setVideo(data.secure_url);
-					}
-				})
-				.catch((err) => console.log(err));
+			setBase64Img(data);
 		}
 	};
 
 	const storiesInsertSchema = Yup.object().shape({
 		title: Yup.string().required(),
 		description: Yup.string().required(),
+		video_url: Yup.string().required(),
 		video_type: Yup.string().required()
-	});
-
-	const storiesUpdateSchema = Yup.object().shape({
-		title: Yup.string(),
-		description: Yup.string(),
-		video_type: Yup.string()
 	});
 
 	return (
@@ -96,30 +62,37 @@ const StoryDetails = ({
 				initialValues={{
 					title: updateDetails ? updateDetails.video_title : '',
 					description: updateDetails ? updateDetails.video_description : '',
+					video_url: updateDetails ? updateDetails.video_url : '',
 					video_type: updateDetails ? updateDetails.video_type : ''
 				}}
 				onSubmit={(values, actions) => {
-					console.log(values);
 					updateOrInsertStories(
 						values,
 						updateDetails ? updateDetails.id : null,
-						photo.length > 0 ? photo : null,
-						video.length > 0 ? video : null
+						photo.length > 0 ? photo : null
 					).then((res) => {
+						fetch('https://api.cloudinary.com/v1_1/dn3s6sgki/upload', {
+							body: base64Img,
+							headers: {
+								'content-type': 'application/json'
+							},
+							method: 'POST'
+						})
+							.then(async (r) => {
+								let data = await r.json();
+								setPhoto(data.secure_url);
+							})
+							.catch((err) => console.log(err));
 						setIsModalOpen(false);
 						setPhoto('');
-						setVideo('');
 						setSelectedImage(null);
-						setSelectedVideo(null);
 						updateDetails(null);
 						getStories().then((res) => {
 							setStories(res.data);
 						});
 					});
 				}}
-				validationSchema={
-					updateDetails ? storiesUpdateSchema : storiesInsertSchema
-				}
+				validationSchema={storiesInsertSchema}
 			>
 				{({
 					handleChange,
@@ -162,60 +135,23 @@ const StoryDetails = ({
 								<Picker.Item label='Mini Clip' value='Mini clip' />
 								<Picker.Item label='Youtube' value='Youtube' />
 							</Picker>
-							{values.video_type === 'Youtube' && (
-								<View style={styles.inputView}>
-									<Text style={styles.inputlabel}>Video Url</Text>
-									<TextInput
-										name='video_url'
-										multiline={true}
-										style={styles.textInput}
-										onBlur={handleBlur('video_url')}
-										onChangeText={(text) => setVideo(text)}
-										value={video}
-									/>
-								</View>
-							)}
-							{values.video_type === 'Mini clip' && (
-								<View style={styles.inputView}>
-									<TouchableOpacity
-										style={styles.button}
-										onPress={() => pickImage('video')}
-									>
-										<Text style={[styles.buttonTextPicture]}>
-											{selectedVideo ? 'Video selected' : 'Select Video'}
-										</Text>
-									</TouchableOpacity>
-									{/* {selectedImage && (
-										<Image
-											source={{
-												uri: updateDetails
-													? updateDetails.video_thumbnail
-													: selectedImage.localUri
-											}}
-											style={styles.thumbnail}
-										/>
-									)} */}
-								</View>
-							)}
 							<View style={styles.inputView}>
-								<TouchableOpacity
-									style={styles.button}
-									onPress={() => pickImage('thumbnail')}
-								>
+								<Text style={styles.inputlabel}>Video Url</Text>
+								<TextInput
+									name='video_url'
+									multiline={true}
+									style={styles.textInput}
+									onBlur={handleBlur('video_url')}
+									onChangeText={handleChange('video_url')}
+									value={values.video_url}
+								/>
+							</View>
+							<View style={styles.inputView}>
+								<TouchableOpacity style={styles.button} onPress={pickImage}>
 									<Text style={[styles.buttonTextPicture]}>
 										{selectedImage ? 'Image Selected' : 'Select Thumbnail'}
 									</Text>
 								</TouchableOpacity>
-								{/* {selectedImage && (
-									<Image
-										source={{
-											uri: updateDetails
-												? updateDetails.video_thumbnail
-												: selectedImage.localUri
-										}}
-										style={styles.thumbnail}
-									/>
-								)} */}
 							</View>
 							<Button
 								style={styles.buttonText}
