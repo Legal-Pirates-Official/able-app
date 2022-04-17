@@ -1,13 +1,11 @@
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { AntDesign } from '@expo/vector-icons';
 
-import AboutAdmin from '../screens/mainscreens/AboutAdmin';
 import ReadStories from '../screens/Stories/ReadStories.screen';
 import Meet from '../screens/mainscreens/meet';
 import ShowRequests from '../screens/mainscreens/ShowRequests';
-import Homeabout from '../screens/mainscreens/Homeabout'
-import Navigation from './navigation'
-import { getRequest } from '../axios/meet';
+import Navigation from './navigation';
+import ReadAbout from '../screens/About/ReadAbout.screen';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -47,8 +45,7 @@ function Topnavigation() {
 						iconName = focused ? 'profile' : 'profile';
 					} else if (route.name === 'Stories') {
 						iconName = focused ? 'clockcircle' : 'clockcircle';
-					}
-					else if (route.name === 'homenavigator') {
+					} else if (route.name === 'homenavigator') {
 						iconName = focused ? 'profile' : 'profile';
 					}
 					// You can return any component that you like here!
@@ -66,7 +63,7 @@ function Topnavigation() {
 			}}
 		>
 			<Tab.Screen name='homenavigator' component={Navigation} />
-			<Tab.Screen name='About' component={AboutAdmin} />
+			<Tab.Screen name='About' component={ReadAbout} />
 			<Tab.Screen name='Stories' component={ReadStories} />
 			<Tab.Screen name='Meet' component={Meet} />
 			<Tab.Screen name='ShowRequests' component={ShowRequests} />
