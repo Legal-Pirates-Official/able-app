@@ -32,7 +32,7 @@ const ClipsVideos = ({ navigation, clips }) => {
 									<Text style={styles.innerText}>{clip.title}</Text>
 									<Image
 										source={{
-											uri: clip.image
+											uri: clip.video_thumbnail
 										}}
 										style={styles.storyThumbnail}
 									/>

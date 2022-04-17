@@ -6,6 +6,7 @@ import Swipercont from "./swiper";
 const {width, height} = Dimensions.get("window");
 
 const Swipercontainer = (props) => {
+    
     const {liveevent, title} = props;
     return (
         <View style={styles.areatwo}>
@@ -29,8 +30,11 @@ const styles = StyleSheet.create({
         width: width - 30,
     },
     abouthead: {
-        color: "#fff",
-        fontSize: 30,
+        color: "#EEEEEE",
+        fontSize: 26,
         fontWeight: "bold",
+        paddingBottom: 10,
+        paddingLeft: 20,
+
     },
 });

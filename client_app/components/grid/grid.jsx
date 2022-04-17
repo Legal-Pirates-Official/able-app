@@ -13,10 +13,10 @@ const Gridcont = () => {
       style={styles.gridView}
       staticDimension={420}
       // fixed
-      spacing={10}
+      // spacing={10}
       renderItem={({ item }) => (
-        <View style={[styles.itemContainer]}>
-          <Text style={styles.itemName}>{item.name}</Text>
+        <View style={[styles.itemContainer,styles.color(item.color)]}>
+          <Text style={[styles.itemName]}>{item.name}</Text>
           <Text style={styles.itemCode}>{item.code}</Text>
           <Text style={styles.itemCode}>{item.codetwo}</Text>
         </View>
@@ -30,15 +30,20 @@ export default Gridcont
 const styles = StyleSheet.create({
   gridView: {
     marginTop: 20,
+    // width: '60%'
   },
+  color:(color) => ({
+    backgroundColor: color,
+  }),
   itemContainer: {
     justifyContent: 'center',
     justifyContent: 'center',
     backgroundColor: '#81E2D7',
-    borderRadius: 15,
+    borderRadius: 8,
     padding: 10,
     height: 150,
     width: width/2.2,
+    margin: 1,
   },
   itemName: {
     fontSize: 120,

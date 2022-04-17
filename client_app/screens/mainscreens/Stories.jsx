@@ -15,10 +15,13 @@ const Stories = ({ navigation }) => {
 	const [youtubeClips, setYoutubeClips] = useState([]);
 
 	useEffect(() => {
-		getStories().then((res) => {
-			setMiniClips(res.data.filter((clip) => clip.video_type === 'miniclip'));
-			setYoutubeClips(res.data.filter((clip) => clip.video_type === 'Youtube'));
-		});
+		// getStories().then((res) => {
+			console.log('====================================');
+			// console.log(res);
+			console.log('====================================');
+			setMiniClips(getStories().data.filter((clip) => clip.video_type === 'miniclip'));
+			setYoutubeClips(getStories().data.filter((clip) => clip.video_type === 'Youtube'));
+		// });
 	}, []);
 
 	return (
