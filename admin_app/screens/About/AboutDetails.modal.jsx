@@ -16,18 +16,19 @@ import React, { useState, useEffect } from 'react';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import * as ImagePicker from 'expo-image-picker';
-import { updateOrInsertStories, getStories } from '../../axios/stories.axios';
-import axios from 'axios';
+import { getAbout, updateOrInsertAbout } from '../../axios/about';
 
-const StoryDetails = ({
+const AboutDetails = ({
 	isModalOpen,
 	setIsModalOpen,
 	updateDetails,
-	setStories
+	setUpdateDetails,
+	setAbout
 }) => {
 	const [selectedImage, setSelectedImage] = useState(null);
 	const [photo, setPhoto] = useState('');
 	const [base64Img, setBase64Img] = useState('');
+	const [isLoading, setIsLoading] = useState(false);
 
 	const pickImage = async () => {
 		let result = await ImagePicker.launchImageLibraryAsync({
@@ -35,21 +36,34 @@ const StoryDetails = ({
 		});
 
 		if (!result.cancelled) {
+			setIsLoading(true);
 			setSelectedImage({ localUri: result.uri });
 			let base64Img = `data:image/jpg;base64,${result.base64}`;
 			let data = {
 				file: base64Img,
 				upload_preset: 'xnjpoohq'
 			};
-			setBase64Img(data);
+			await fetch('https://api.cloudinary.com/v1_1/dn3s6sgki/upload', {
+				body: data,
+				headers: {
+					'content-type': 'application/json'
+				},
+				method: 'POST'
+			})
+				.then(async (r) => {
+					let data = await r.json();
+					console.log(data, 'data');
+					setPhoto(data.secure_url);
+					setIsLoading(false);
+				})
+				.catch((err) => console.log(err));
 		}
 	};
 
-	const storiesInsertSchema = Yup.object().shape({
-		title: Yup.string().required(),
-		description: Yup.string().required(),
-		video_url: Yup.string().required(),
-		video_type: Yup.string().required()
+	const aboutInsertSchema = Yup.object().shape({
+		about_description: Yup.string().required(),
+		card_title: Yup.string().required(),
+		card_description: Yup.string().required()
 	});
 
 	return (
@@ -60,104 +74,89 @@ const StoryDetails = ({
 		>
 			<Formik
 				initialValues={{
-					title: updateDetails ? updateDetails.video_title : '',
-					description: updateDetails ? updateDetails.video_description : '',
-					video_url: updateDetails ? updateDetails.video_url : '',
-					video_type: updateDetails ? updateDetails.video_type : ''
+					about_description: updateDetails
+						? updateDetails.about_description
+						: '',
+					card_title: updateDetails ? updateDetails.card_title : '',
+					card_description: updateDetails ? updateDetails.card_description : ''
 				}}
 				onSubmit={async (values, actions) => {
-					photo &&
-						(await fetch('https://api.cloudinary.com/v1_1/dn3s6sgki/upload', {
-							body: base64Img,
-							headers: {
-								'content-type': 'application/json'
-							},
-							method: 'POST'
-						})
-							.then(async (r) => {
-								let data = await r.json();
-								setPhoto(data.secure_url);
-							})
-							.catch((err) => console.log(err)));
-					await updateOrInsertStories(
+					console.log(photo);
+					await updateOrInsertAbout(
 						values,
 						updateDetails ? updateDetails.id : null,
-						photo.length > 0 ? photo : null
+						photo ? photo : null
 					).then((res) => {
-						setIsModalOpen(false);
 						setPhoto('');
 						setSelectedImage(null);
-						updateDetails(null);
-						getStories().then((res) => {
-							setStories(res.data);
+						setUpdateDetails(null);
+						getAbout().then((res) => {
+							setAbout(res.data);
 						});
+						setIsModalOpen(false);
 					});
 				}}
-				validationSchema={storiesInsertSchema}
+				validationSchema={aboutInsertSchema}
 			>
-				{({
-					handleChange,
-					handleSubmit,
-					handleBlur,
-					values,
-					errors,
-					touched
-				}) => (
+				{({ handleChange, handleSubmit, handleBlur, values }) => (
 					<ScrollView style={styles.scrollView}>
-						<View style={{ flex: 1 }}>
-							<Text style={styles.textHeading}>Insert Stories</Text>
-							<View style={styles.inputView}>
-								<Text style={styles.inputlabel}>Title</Text>
-								<TextInput
-									name='title'
-									multiline={true}
-									style={styles.inputTag}
-									onBlur={handleBlur('title')}
-									onChangeText={handleChange('title')}
-									value={values.title}
-								/>
-							</View>
+						<View
+							style={{
+								alignItems: 'center',
+								justifyContent: 'center',
+								paddingBottom: 150,
+								width: Dimensions.get('window').width
+							}}
+						>
+							<Text style={styles.textHeading}>About Admin</Text>
 							<View style={styles.inputView}>
 								<Text style={styles.inputlabel}>Description</Text>
 								<TextInput
-									name='description'
+									name='about_description'
 									multiline={true}
 									style={styles.textInput}
-									onBlur={handleBlur('description')}
-									onChangeText={handleChange('description')}
-									value={values.description}
+									onBlur={handleBlur('about_description')}
+									onChangeText={handleChange('about_description')}
+									value={values.about_description}
 								/>
 							</View>
-							<Picker
-								selectedValue={values.video_type}
-								onValueChange={handleChange('video_type')}
-							>
-								<Picker.Item label='Select Category' value='' />
-								<Picker.Item label='Mini Clip' value='Mini clip' />
-								<Picker.Item label='Youtube' value='Youtube' />
-							</Picker>
 							<View style={styles.inputView}>
-								<Text style={styles.inputlabel}>Video Url</Text>
+								<Text style={styles.inputlabel}>Card Title</Text>
 								<TextInput
-									name='video_url'
+									name='card_title'
 									multiline={true}
-									style={styles.textInput}
-									onBlur={handleBlur('video_url')}
-									onChangeText={handleChange('video_url')}
-									value={values.video_url}
+									style={styles.inputTag}
+									onBlur={handleBlur('card_title')}
+									onChangeText={handleChange('card_title')}
+									value={values.card_title}
 								/>
 							</View>
 							<View style={styles.inputView}>
-								<TouchableOpacity style={styles.button} onPress={pickImage}>
-									<Text style={[styles.buttonTextPicture]}>
-										{selectedImage ? 'Image Selected' : 'Select Thumbnail'}
-									</Text>
-								</TouchableOpacity>
+								<Text style={styles.inputlabel}>Card Description</Text>
+								<TextInput
+									name='card_description'
+									multiline={true}
+									style={styles.textInput}
+									onBlur={handleBlur('card_description')}
+									onChangeText={handleChange('card_description')}
+									value={values.card_description}
+								/>
 							</View>
+							<View>
+								{selectedImage && (
+									<Image
+										source={{ uri: selectedImage.localUri }}
+										style={styles.thumbnail}
+									/>
+								)}
+							</View>
+							<TouchableOpacity onPress={pickImage} style={styles.button}>
+								<Text style={styles.buttonTextPicture}>Pick a photo</Text>
+							</TouchableOpacity>
 							<Button
-								style={styles.buttonText}
+								disabled={isLoading}
+								title='submit'
 								onPress={() => handleSubmit()}
-								title='Submit'
 							/>
 						</View>
 					</ScrollView>
@@ -167,7 +166,7 @@ const StoryDetails = ({
 	);
 };
 
-export default StoryDetails;
+export default AboutDetails;
 
 const styles = StyleSheet.create({
 	scrollView: {

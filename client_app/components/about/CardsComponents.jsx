@@ -8,7 +8,7 @@ const CardsComponents = () => {
     useEffect(async () => {
         await getAbout().then((res) => {
             setAwards(res.data);
-            // console.log(res.data, "awards");
+            console.log(res, "awards");
         });
     }, []);
 
@@ -27,6 +27,7 @@ const CardsComponents = () => {
                         <Text style={styles.text}>Dr.Rajesh Fernando</Text>
                         {awards &&
                             awards.map((award) => {
+                                console.log(award, "award");
                                 return (
                                     <Text style={styles.description}>
                                         {award.about_description}
@@ -83,5 +84,6 @@ const styles = StyleSheet.create({
         color: "black",
         paddingHorizontal: 20,
         textAlign: "justify",
+        zIndex: 1,
     },
 });

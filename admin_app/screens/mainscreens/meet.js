@@ -10,11 +10,12 @@ import {
 import React, { useState } from "react";
 import { Formik } from "formik";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import { addSlot } from "../../axios/meet";
+import { addSlot,meetLinkChange } from "../../axios/meet";
 
 const Meet = ({navigation}) => {
   const [meetLink, setMeetLink] = useState("");
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [dates, setDates] = useState("");
   const [noOfSlots, setNoOfSlots] = useState([]);
 
@@ -42,6 +43,10 @@ const Meet = ({navigation}) => {
         this[`time_slot${i}_am_pm`] = "AM";
       }
     }
+  }
+  const handleLink = async () => {
+    console.log(meetLink,email,password,'ss');
+    await meetLinkChange(meetLink,email,password)
   }
   return (
     <View
@@ -139,6 +144,19 @@ const Meet = ({navigation}) => {
                   placeholder="email"
                   // keyboardType="numeric"
                 />
+                <TextInput
+                  style={styles.input}
+                  onChangeText={(text) => setPassword(text)}
+                  value={password}
+                  placeholder="password"
+                  // keyboardType="numeric"
+                />
+                <TouchableOpacity
+                  style={styles.submitbtn}
+                  onPress={handleLink}
+                >
+                  <Text>Change MeetLink</Text>
+                </TouchableOpacity>
                 <TouchableOpacity
                   style={styles.submitbtn}
                   onPress={handleSubmit}

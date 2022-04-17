@@ -16,8 +16,9 @@ import Swipercontainer from "../../components/swipercontainer";
 import Gridcont from "../../components/grid/grid";
 
 // import Swipercont from "../../components/swiper";
-
+import {LinearGradient} from 'expo-linear-gradient';
 const { width, height } = Dimensions.get("window");
+
 
 const Home = ({ navigation }) => {
   const scrollA = useRef(new Animated.Value(0)).current;

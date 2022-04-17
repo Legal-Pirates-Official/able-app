@@ -78,7 +78,9 @@ const ReadStories = ({ navigation }) => {
 											style={{
 												position: 'relative',
 												bottom: 10,
-												marginTop: 10
+												marginTop: 10,
+												width: 28,
+												height: 28
 											}}
 										>
 											<MaterialIcons name='delete' size={28} color='black' />
