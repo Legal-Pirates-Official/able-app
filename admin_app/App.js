@@ -7,6 +7,7 @@ import Homeabout from "./screens/mainscreens/Homeabout";
 
 const Stack = createNativeStackNavigator();
 
+
 export default function App() {
   return (
     <NavigationContainer>
