@@ -32,7 +32,7 @@ function Topnavigation() {
                     height: 4,
                 },
                 tabBarStyle: {
-                    backgroundColor: "#81E2D7",
+                    backgroundColor: "#336DF5",
                     width: "85%",
                     alignSelf: "center",
                     borderRadius: 20,
@@ -77,8 +77,8 @@ function Topnavigation() {
                         />
                     );
                 },
-                tabBarActiveTintColor: "tomato",
-                tabBarInactiveTintColor: "gray",
+                tabBarActiveTintColor: "#fff",
+                tabBarInactiveTintColor: "rgb(77, 77, 77)",
                 lazy: true,
                 tabBarShowLabel: false,
             })}

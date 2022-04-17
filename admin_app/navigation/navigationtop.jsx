@@ -1,6 +1,5 @@
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { AntDesign } from '@expo/vector-icons';
-
 import AboutAdmin from '../screens/mainscreens/AboutAdmin';
 import ReadStories from '../screens/Stories/ReadStories.screen';
 import Meet from '../screens/mainscreens/meet';
@@ -30,7 +29,7 @@ function Topnavigation() {
 					height: 4
 				},
 				tabBarStyle: {
-					backgroundColor: '#81E2D7',
+					backgroundColor: '#336DF5',
 					width: '85%',
 					alignSelf: 'center',
 					borderRadius: 20,

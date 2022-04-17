@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
   itemContainer: {
     justifyContent: 'center',
     justifyContent: 'center',
-    backgroundColor: '#81E2D7',
+    backgroundColor: '#336DF5',
     borderRadius: 15,
     padding: 10,
     height: 150,
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
   itemCode: {
     fontWeight: 'bold',
     fontSize: 20,
-    color: '#000',
+    color: '#fff',
     alignSelf: 'center',
   },
 });

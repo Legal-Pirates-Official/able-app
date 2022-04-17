@@ -26,10 +26,10 @@ const styles = StyleSheet.create({
     },
     aboutheadcontainer: {
         height: 65,
-        width: width - 30,
+        width: width - 60,
     },
     abouthead: {
-        color: "#fff",
+        color: "#000",
         fontSize: 30,
         fontWeight: "bold",
     },

@@ -32,7 +32,6 @@ const styles = StyleSheet.create({
   container: {
     width: width,
     alignItems: "center",
-
     height: height / 3,
   },
   wrapper: {

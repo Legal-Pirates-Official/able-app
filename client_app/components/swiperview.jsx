@@ -62,6 +62,5 @@ const styles = StyleSheet.create({
     shadowRadius: 3,
     elevation: 5,
     marginLeft: 10,
-
   },
 });

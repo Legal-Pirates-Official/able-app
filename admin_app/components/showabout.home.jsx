@@ -100,5 +100,6 @@ const styles = StyleSheet.create({
     borderBottomColor: "#000",
     borderBottomWidth: 3,
     borderRadius: 10,
+    
   }
 });
