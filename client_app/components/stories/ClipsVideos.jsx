@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
 	},
 	headerText: {
 		position: 'relative',
-		color: '#fff',
+		color: '#000',
 		fontSize: 30,
 		fontWeight: 'bold',
 		textAlign: 'center',
@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
 		position: 'relative',
 		width: Dimensions.get('window').width / 1.05,
 		height: Dimensions.get('window').height / 3,
-		borderRadius: 10,
+		borderRadius: 30,
 		backgroundColor: '#1e1e1e',
 		marginBottom: 10,
 		marginHorizontal: 10,
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
 		position: 'absolute',
 		width: Dimensions.get('window').width / 1.05,
 		height: Dimensions.get('window').height / 3,
-		borderRadius: 10,
+		borderRadius: 30,
 		backgroundColor: '#1e1e1e',
 		alignItems: 'center',
 		justifyContent: 'center',
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
 		elevation: 27,
 		zIndex: 10,
 		paddingVertical: 10,
-		borderBottomLeftRadius: 10,
-		borderBottomRightRadius: 10
+		borderBottomLeftRadius: 30,
+		borderBottomRightRadius: 30
 	}
 });

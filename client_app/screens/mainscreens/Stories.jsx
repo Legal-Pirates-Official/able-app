@@ -37,7 +37,7 @@ export default Stories;
 const styles = StyleSheet.create({
 	scrollView: {
 		position: 'relative',
-		backgroundColor: '#1e1e1e',
+		backgroundColor: '#fff',
 		width: Dimensions.get('window').width,
 		height: Dimensions.get('window').height,
 		marginTop: StatusBar.currentHeight
