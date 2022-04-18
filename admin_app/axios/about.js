@@ -1,4 +1,4 @@
-const axios = require('axios');
+import axios from 'axios';
 
 const baseURL = 'http://192.168.0.103:8080';
 

@@ -13,6 +13,7 @@ export const getAbout = async (values) =>{
    return await axios.get(`${baseURL}/admin/about`)
 };
 
+
 export const postAbout = async (values, photo) => {
     try {
         return await axios.post(`${baseURL}/admin/about`, {values, photo});
