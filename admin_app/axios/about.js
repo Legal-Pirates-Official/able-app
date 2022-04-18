@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const baseURL = 'http://192.168.0.103:8080';
+// const baseURL = 'http://192.168.0.103:8080';
+const baseURL = 'https://able-server.herokuapp.com';
 
 export const getAbout = async () => {
 	return await axios.get(`${baseURL}/admin/about`);
