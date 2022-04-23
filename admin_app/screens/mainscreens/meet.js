@@ -5,6 +5,8 @@ import {
   TouchableOpacity,
   ScrollView,
   TextInput,
+  Modal,
+  Alert,
   Picker,
 } from "react-native";
 import React, { useState } from "react";
@@ -13,6 +15,7 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { addSlot,meetLinkChange } from "../../axios/meet";
 
 const Meet = ({navigation}) => {
+  const [linkVisible, setLinkVisible] = useState(false);
   const [meetLink, setMeetLink] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -46,8 +49,12 @@ const Meet = ({navigation}) => {
   }
   const handleLink = async () => {
     console.log(meetLink,email,password,'ss');
-    await meetLinkChange(meetLink,email,password)
+    setLinkVisible(true);
   }
+  const handleMeetSubmit = async () => {
+    await meetLinkChange(meetLink,email,password)
+    setLinkVisible(false);
+  };
   return (
     <View
       style={{
@@ -85,17 +92,17 @@ const Meet = ({navigation}) => {
               }}
             >
               <View style={styles.timeslot}>
-              <TouchableOpacity
+              {/* <TouchableOpacity
                   style={styles.btn}
                   onPress={()=>navigation.navigate('ShowRequests')}
                 >
                   <Text>See Requests</Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
                 <TouchableOpacity
                   style={styles.btn}
                   onPress={() => setDatePickerVisibility(true)}
                 >
-                  <Text>Add Date</Text>
+                  <Text>{dates ? dates : "Pick Date"}</Text>
                 </TouchableOpacity>
                 <ScrollView>
                   {noOfSlots &&
@@ -130,27 +137,41 @@ const Meet = ({navigation}) => {
                     <Text>Add Time slot</Text>
                   </TouchableOpacity>
                 </ScrollView>
-                <TextInput
-                  style={styles.input}
-                  onChangeText={(text) => setMeetLink(text)}
-                  value={meetLink}
-                  placeholder="meetLink"
-                  // keyboardType="numeric"
-                />
-                <TextInput
-                  style={styles.input}
-                  onChangeText={(text) => setEmail(text)}
-                  value={email}
-                  placeholder="email"
-                  // keyboardType="numeric"
-                />
-                <TextInput
-                  style={styles.input}
-                  onChangeText={(text) => setPassword(text)}
-                  value={password}
-                  placeholder="password"
-                  // keyboardType="numeric"
-                />
+               
+                <Modal
+                style={styles.meet}
+        animationType="slide"
+        transparent={false}
+        visible={linkVisible}
+        onRequestClose={() => {
+          
+          setLinkVisible(!linkVisible);
+        }}
+      >
+                 <TextInput
+                   style={styles.input2}
+                   onChangeText={(text) => setMeetLink(text)}
+                   value={meetLink}
+                   placeholder="meetLink"
+                   // keyboardType="numeric"
+                 />
+                 <TextInput
+                   style={styles.input2}
+                   onChangeText={(text) => setEmail(text)}
+                   value={email}
+                   placeholder="email"
+                   // keyboardType="numeric"
+                 />
+                 <TextInput
+                   style={styles.input2}
+                   onChangeText={(text) => setPassword(text)}
+                   value={password}
+                   placeholder="password"
+                   // keyboardType="numeric"
+                 />
+                 <TouchableOpacity style={styles.btn} onPress={handleMeetSubmit}><Text>Submit</Text></TouchableOpacity></Modal>
+                
+               
                 <TouchableOpacity
                   style={styles.submitbtn}
                   onPress={handleLink}
@@ -196,20 +217,28 @@ const Box = ({ index, handleChange, handleBlur, values }) => {
   );
 };
 const styles = StyleSheet.create({
+  meet: {
+  // height: 400,
+  // position: "absolute"
+  justifyContent: "center",
+  alignItems: "center",
+
+  },
   submitbtn: {
     borderRadius: 10,
     padding: 10,
     paddingHorizontal: 20,
     margin: 10,
-    borderColor: "black",
+    borderColor: "#00b5ec",
     borderWidth: 3,
   },
   btn: {
-    backgroundColor: "red",
     borderRadius: 10,
     padding: 10,
     paddingHorizontal: 20,
     margin: 10,
+    borderColor: "#00b5ec",
+    borderWidth: 3,
   },
   pick: {
     width: 100,
@@ -222,7 +251,7 @@ const styles = StyleSheet.create({
   timeslot: {
     // position: 'absolute',
     width: 400,
-    height: 500,
+    height: '50%',
     // backgroundColor: "black",
     borderRadius: 20,
     alignItems: "center",
@@ -240,6 +269,14 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 10,
     width: "60%",
+  },
+  input2: {
+    height: 50,
+    margin: 12,
+    borderWidth: 1,
+    borderRadius: 10,
+    padding: 10,
+    width: "90%",
   },
 });
 export default Meet;

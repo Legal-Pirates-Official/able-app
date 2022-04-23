@@ -70,10 +70,11 @@ export const sendMail = async (email,name,date,timeslot,slots) => {
 };
 
 
-export const mailer = async (email,timeslot) => {
+export const mailer = async (email,timeslot,date) => {
     return await axios.post(`${baseURL}/admin/mail/`,{
         email,
-        timeslot
+        timeslot,
+        date
     },(err,res)=> {
         if(err) {
             console.log(err);
@@ -101,10 +102,10 @@ export const meetLinkChange = async (meetLink,email,password) => {
 }
 
 
-export const rejectRequest = async (email) => {
+export const rejectRequest = async (email,date) => {
 
     return await axios.post(`${baseURL}/admin/reject/`,{
-        email
+        email,date
     },(err,res)=> {
         if(err) {
             console.log(err);

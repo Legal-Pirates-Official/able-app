@@ -12,10 +12,10 @@ const Homeabout = ({navigation}) => {
         <TouchableOpacity style={styles.aboutbtn} onPress={() => navigation.navigate("Abouthome")}>
             <Text style={styles.text}>About Able</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.eventsbtn} onPress={() => navigation.navigate("LiveEvents")}>
+        <TouchableOpacity style={styles.aboutbtn} onPress={() => navigation.navigate("LiveEvents")}>
             <Text style={styles.text}>Live Events</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.youtubebtn} onPress={() => navigation.navigate("Youtubevideo")}>
+        <TouchableOpacity style={styles.aboutbtn} onPress={() => navigation.navigate("Youtubevideo")}>
             <Text style={styles.text}>Youtube Video</Text>
         </TouchableOpacity>
     </View>
@@ -33,47 +33,20 @@ const styles = StyleSheet.create({
     aboutbtn:{
         width: width/1.5,
         height: height/8,
-        backgroundColor: '#00BFFF',
+        borderColor: '#00BFFF',
+        borderWidth: 1,
         justifyContent: "center",
         alignItems: "center",
         alignSelf: "center",
         borderRadius: 20,
         marginBottom: 20,
-        shadowColor: "#000",
-        shadowOffset: { width: 3, height: 5 },
-        shadowOpacity: 0.8,
-        shadowRadius: 6,
-        elevation: 5,
+        // shadowColor: "#000",
+        // shadowOffset: { width: 3, height: 5 },
+        // shadowOpacity: 0.8,
+        // shadowRadius: 6,
+        // elevation: 5,
     },
-    eventsbtn:{
-        width: width/1.5,
-        height: height/8,
-        backgroundColor: '#a6a6a6',
-        justifyContent: "center",
-        alignItems: "center",
-        alignSelf: "center",
-        borderRadius: 20,
-        marginBottom: 20,
-        shadowColor: "#000",
-        shadowOffset: { width: 3, height: 5 },
-        shadowOpacity: 0.8,
-        shadowRadius: 6,
-        elevation: 5,
-    },
-    youtubebtn:{
-        width: width/1.5,
-        height: height/8,
-        backgroundColor: '#a6a6a6',
-        justifyContent: "center",
-        alignItems: "center",
-        alignSelf: "center",
-        borderRadius: 20,
-        shadowColor: "#000",
-        shadowOffset: { width: 3, height: 5 },
-        shadowOpacity: 0.8,
-        shadowRadius: 6,
-        elevation: 5,
-    },
+    
     title:{
         alignSelf: "center",
         marginBottom: 40,
@@ -86,6 +59,6 @@ const styles = StyleSheet.create({
     text:{
         fontSize: 20,
         fontWeight: "bold",
-        color: '#fff',
+        color: '#000000',
     }
 })

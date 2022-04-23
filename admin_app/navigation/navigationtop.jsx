@@ -52,7 +52,7 @@ function Topnavigation() {
 					return <AntDesign name={iconName} size={20} color={color} />;
 				},
 				tabBarActiveTintColor: 'tomato',
-				tabBarInactiveTintColor: 'gray',
+				tabBarInactiveTintColor: 'grey',
 				lazy: true,
 				tabBarShowLabel: false
 			})}
