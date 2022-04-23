@@ -59,7 +59,7 @@ export default YoutubeVideos;
 
 const styles = StyleSheet.create({
 	textHeader: {
-		color: '#fff',
+		color: '#000',
 		fontSize: 30,
 		fontWeight: 'bold',
 		textAlign: 'center',

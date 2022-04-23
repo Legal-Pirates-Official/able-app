@@ -15,7 +15,7 @@ const Gridcont = () => {
       // fixed
       // spacing={10}
       renderItem={({ item }) => (
-        <View style={[styles.itemContainer,styles.color(item.color)]}>
+        <View style={styles.itemContainer}>
           <Text style={[styles.itemName]}>{item.name}</Text>
           <Text style={styles.itemCode}>{item.code}</Text>
           <Text style={styles.itemCode}>{item.codetwo}</Text>
@@ -32,9 +32,9 @@ const styles = StyleSheet.create({
     marginTop: 20,
     // width: '60%'
   },
-  color:(color) => ({
-    backgroundColor: color,
-  }),
+  color:{
+    backgroundColor: "#336DF5",
+  },
   itemContainer: {
     justifyContent: 'center',
     justifyContent: 'center',

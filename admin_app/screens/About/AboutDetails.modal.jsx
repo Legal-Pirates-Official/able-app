@@ -61,7 +61,7 @@ const AboutDetails = ({
 	};
 
 	const aboutInsertSchema = Yup.object().shape({
-		about_description: Yup.string().required(),
+		// about_description: Yup.string().required(),
 		card_title: Yup.string().required(),
 		card_description: Yup.string().required()
 	});
@@ -109,7 +109,7 @@ const AboutDetails = ({
 							}}
 						>
 							<Text style={styles.textHeading}>About Admin</Text>
-							<View style={styles.inputView}>
+							{/* <View style={styles.inputView}>
 								<Text style={styles.inputlabel}>Description</Text>
 								<TextInput
 									name='about_description'
@@ -119,7 +119,7 @@ const AboutDetails = ({
 									onChangeText={handleChange('about_description')}
 									value={values.about_description}
 								/>
-							</View>
+							</View> */}
 							<View style={styles.inputView}>
 								<Text style={styles.inputlabel}>Card Title</Text>
 								<TextInput

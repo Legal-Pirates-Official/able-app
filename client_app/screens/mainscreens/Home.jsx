@@ -16,7 +16,7 @@ import Swipercontainer from "../../components/swipercontainer";
 import Gridcont from "../../components/grid/grid";
 
 // import Swipercont from "../../components/swiper";
-import {LinearGradient} from 'expo-linear-gradient';
+// import {LinearGradient} from 'expo-linear-gradient';
 const { width, height } = Dimensions.get("window");
 
 
@@ -89,7 +89,6 @@ const Home = ({ navigation }) => {
               <Gridcont />
             </View>
           </View>
-
           <Swipercontainer liveevent={yt} title={"Youtube videos"} />
           <StatusBar
             barStyle="light-content"

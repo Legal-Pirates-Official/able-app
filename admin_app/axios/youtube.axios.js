@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseurl = 'http://192.168.43.30:8080';
+const baseurl = 'https://able-server.herokuapp.com';
 
 export const getyoutube = ()=> axios.get(`${baseurl}/admin/home/youtube`)
 export const youtubeInsert = (values,photo)=> axios.post(`${baseurl}/admin/home/youtube`,{values,photo});
