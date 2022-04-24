@@ -8,9 +8,6 @@ export const getAbout = async () => {
 };
 
 export const updateOrInsertAbout = (values, id, photo) => {
-    console.log('====================================');
-    console.log(photo);
-    console.log('====================================');
 	return axios.post(
 		id ? `${baseURL}/admin/about/${id}` : `${baseURL}/admin/about`,
 		{

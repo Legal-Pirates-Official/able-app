@@ -31,7 +31,8 @@ const StoryDetails = ({
 
 	const pickImage = async () => {
 		let result = await ImagePicker.launchImageLibraryAsync({
-			mediaTypes: ImagePicker.MediaTypeOptions.Images
+			mediaTypes: ImagePicker.MediaTypeOptions.Images,
+			base64: true
 		});
 
 		if (!result.cancelled) {
@@ -60,36 +61,45 @@ const StoryDetails = ({
 		>
 			<Formik
 				initialValues={{
-					title: updateDetails ? updateDetails.video_title : '',
-					description: updateDetails ? updateDetails.video_description : '',
-					video_url: updateDetails ? updateDetails.video_url : '',
-					video_type: updateDetails ? updateDetails.video_type : ''
+					title: updateDetails ? updateDetails.video_title : 'essgr',
+					description: updateDetails
+						? updateDetails.video_description
+						: 'essgr',
+					video_url: updateDetails ? updateDetails.video_url : 'essgr',
+					video_type: updateDetails ? updateDetails.video_type : 'Mini clip'
 				}}
 				onSubmit={async (values, actions) => {
-					photo &&
-						(await fetch('https://api.cloudinary.com/v1_1/dn3s6sgki/upload', {
-							body: base64Img,
-							headers: {
-								'content-type': 'application/json'
-							},
-							method: 'POST'
-						})
-							.then(async (r) => {
-								let data = await r.json();
-								setPhoto(data.secure_url);
+					new Promise(async (resolve, reject) => {
+						base64Img &&
+							(await fetch('https://api.cloudinary.com/v1_1/dn3s6sgki/upload', {
+								body: JSON.stringify(base64Img),
+								headers: {
+									'content-type': 'application/json'
+								},
+								method: 'POST'
 							})
-							.catch((err) => console.log(err)));
-					await updateOrInsertStories(
-						values,
-						updateDetails ? updateDetails.id : null,
-						photo.length > 0 ? photo : null
-					).then((res) => {
-						setIsModalOpen(false);
-						setPhoto('');
-						setSelectedImage(null);
-						updateDetails(null);
-						getStories().then((res) => {
-							setStories(res.data);
+								.then(async (r) => {
+									let data = await r.json();
+									setPhoto(data.secure_url);
+									resolve(data.secure_url);
+								})
+								.catch((err) => {
+									console.log(err);
+									resolve(null);
+								}));
+					}).then(async (photo) => {
+						await updateOrInsertStories(
+							values,
+							updateDetails ? updateDetails.id : null,
+							photo
+						).then((res) => {
+							setIsModalOpen(false);
+							setPhoto('');
+							setSelectedImage(null);
+							updateDetails(null);
+							getStories().then((res) => {
+								setStories(res.data);
+							});
 						});
 					});
 				}}

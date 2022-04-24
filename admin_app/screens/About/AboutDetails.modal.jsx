@@ -32,31 +32,18 @@ const AboutDetails = ({
 
 	const pickImage = async () => {
 		let result = await ImagePicker.launchImageLibraryAsync({
-			mediaTypes: ImagePicker.MediaTypeOptions.Images
+			mediaTypes: ImagePicker.MediaTypeOptions.Images,
+			base64: true
 		});
 
 		if (!result.cancelled) {
-			setIsLoading(true);
 			setSelectedImage({ localUri: result.uri });
 			let base64Img = `data:image/jpg;base64,${result.base64}`;
 			let data = {
 				file: base64Img,
 				upload_preset: 'xnjpoohq'
 			};
-			await fetch('https://api.cloudinary.com/v1_1/dn3s6sgki/upload', {
-				body: data,
-				headers: {
-					'content-type': 'application/json'
-				},
-				method: 'POST'
-			})
-				.then(async (r) => {
-					let data = await r.json();
-					console.log(data, 'data');
-					setPhoto(data.secure_url);
-					setIsLoading(false);
-				})
-				.catch((err) => console.log(err));
+			setBase64Img(data);
 		}
 	};
 
@@ -74,26 +61,44 @@ const AboutDetails = ({
 		>
 			<Formik
 				initialValues={{
-					about_description: updateDetails
-						? updateDetails.about_description
-						: '',
 					card_title: updateDetails ? updateDetails.card_title : '',
 					card_description: updateDetails ? updateDetails.card_description : ''
 				}}
 				onSubmit={async (values, actions) => {
-					console.log(photo);
-					await updateOrInsertAbout(
-						values,
-						updateDetails ? updateDetails.id : null,
-						photo ? photo : null
-					).then((res) => {
-						setPhoto('');
-						setSelectedImage(null);
-						setUpdateDetails(null);
-						getAbout().then((res) => {
-							setAbout(res.data);
+					setIsLoading(true);
+					new Promise(async (resolve, reject) => {
+						base64Img &&
+							(await fetch('https://api.cloudinary.com/v1_1/dn3s6sgki/upload', {
+								body: JSON.stringify(base64Img),
+								headers: {
+									'content-type': 'application/json'
+								},
+								method: 'POST'
+							})
+								.then(async (r) => {
+									let data = await r.json();
+									setPhoto(data.secure_url);
+									resolve(data.secure_url);
+								})
+								.catch((err) => {
+									console.log(err);
+									resolve(null);
+								}));
+					}).then(async (photo) => {
+						await updateOrInsertAbout(
+							values,
+							updateDetails ? updateDetails.id : null,
+							photo
+						).then((res) => {
+							setPhoto('');
+							setSelectedImage(null);
+							setUpdateDetails(null);
+							getAbout().then((res) => {
+								setAbout(res.data);
+							});
+							setIsLoading(false);
+							setIsModalOpen(false);
 						});
-						setIsModalOpen(false);
 					});
 				}}
 				validationSchema={aboutInsertSchema}
@@ -142,16 +147,18 @@ const AboutDetails = ({
 									value={values.card_description}
 								/>
 							</View>
-							<View>
+							{/* <View>
 								{selectedImage && (
 									<Image
 										source={{ uri: selectedImage.localUri }}
 										style={styles.thumbnail}
 									/>
 								)}
-							</View>
+							</View> */}
 							<TouchableOpacity onPress={pickImage} style={styles.button}>
-								<Text style={styles.buttonTextPicture}>Pick a photo</Text>
+								<Text style={styles.buttonTextPicture}>
+									{selectedImage ? 'Image selected' : 'Pick a photo'}
+								</Text>
 							</TouchableOpacity>
 							<Button
 								disabled={isLoading}
