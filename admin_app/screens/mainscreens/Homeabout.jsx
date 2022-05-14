@@ -9,9 +9,9 @@ const Homeabout = ({navigation}) => {
   return (
     <View style={styles.homecont}>
         <Text style={styles.title}>HOME</Text>
-        <TouchableOpacity style={styles.aboutbtn} onPress={() => navigation.navigate("Abouthome")}>
+        {/* <TouchableOpacity style={styles.aboutbtn} onPress={() => navigation.navigate("Abouthome")}>
             <Text style={styles.text}>About Able</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <TouchableOpacity style={styles.aboutbtn} onPress={() => navigation.navigate("LiveEvents")}>
             <Text style={styles.text}>Live Events</Text>
         </TouchableOpacity>

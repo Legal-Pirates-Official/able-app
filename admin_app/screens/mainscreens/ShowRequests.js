@@ -1,6 +1,9 @@
-import { View, Text, StyleSheet, TouchableOpacity,ScrollView,StatusBar} from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity,ScrollView,StatusBar, Dimensions} from "react-native";
 import React, { useEffect, useState } from "react";
 import { getRequest, mailer, rejectRequest } from "../../axios/meet";
+import { object } from "yup";
+
+const {height, width} = Dimensions.get('window');
 
 const ShowRequests = ({navigation}) => {
 
@@ -46,8 +49,8 @@ const ShowRequests = ({navigation}) => {
         width: '100%',
         
       }}><>
-
-      {Object(json).map((item) =>{
+      {Object(json).length?
+      (Object(json).map((item) =>{
         console.log(item,'item');
          return (
           <View style={styles.card}>
@@ -63,7 +66,7 @@ const ShowRequests = ({navigation}) => {
             </View>
           </View>
         )
-      })}</>
+      })): (<View style={{alignSelf:'center', height: height, justifyContent: 'center' }}><Text>No data found</Text></View>)}</>
       </ScrollView>
     </View>
   );
