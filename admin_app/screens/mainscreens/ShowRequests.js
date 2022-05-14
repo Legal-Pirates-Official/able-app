@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, TouchableOpacity,ScrollView,StatusBar} from "re
 import React, { useEffect, useState } from "react";
 import { getRequest, mailer, rejectRequest } from "../../axios/meet";
 
-const ShowRequests = () => {
+const ShowRequests = ({navigation}) => {
 
   const [json, setJson] = useState([]);
   const [reject, setReject] = useState(false);
@@ -29,15 +29,15 @@ const ShowRequests = () => {
         
       });
     });
-  }, [reject]);
+  }, []);
   const handleMail =async(email,timeslot,date) => {
-    setReject(!reject);
     await mailer(email,timeslot,date);
+    navigation.navigate('ShowRequests')
      
   };
   const handleRequest = async (email,date) => {
-    setReject(!reject);
     await rejectRequest(email,date);
+    navigation.navigate('ShowRequests')
   }
   return (
     <View style={styles.container}>
