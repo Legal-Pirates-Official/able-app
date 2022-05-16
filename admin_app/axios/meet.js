@@ -1,6 +1,6 @@
 const axios = require("axios");
 
-const baseURL = "http://192.168.0.103:8080";
+const baseURL = "http://192.168.0.101:8080";
 // const baseURL = "https://able-server.herokuapp.com";
 
 export const addSlot = async (dates,values,meetLink,email) => {
@@ -13,11 +13,11 @@ export const addSlot = async (dates,values,meetLink,email) => {
             meetLink: meetLink,
             email:email
         }).then((res) => {
-            console.log(res.data);
+            console.log(res.data,'rs');
             return res.data;
         });
     } catch (error) {
-        console.log(error);
+        console.log(error,'err');
     }
 };
 
@@ -103,10 +103,10 @@ export const meetLinkChange = async (meetLink,email,password) => {
 }
 
 
-export const rejectRequest = async (email,date) => {
+export const rejectRequest = async (email,timeslot,date) => {
 
     return await axios.post(`${baseURL}/admin/reject/`,{
-        email,date
+        email,timeslot,date
     },(err,res)=> {
         if(err) {
             console.log(err);

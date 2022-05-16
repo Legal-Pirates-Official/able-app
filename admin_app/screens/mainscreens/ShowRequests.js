@@ -32,16 +32,24 @@ const ShowRequests = ({navigation}) => {
         
       });
     });
-  }, []);
+  }, [reject]);
+  
   const handleMail =async(email,timeslot,date) => {
-    await mailer(email,timeslot,date);
-    navigation.navigate('ShowRequests')
+    await mailer(email,timeslot,date).then((res) => {
+      navigation.push('Abouthome')
+      setReject(true);
+
+    });
+   
      
   };
-  const handleRequest = async (email,date) => {
-    await rejectRequest(email,date);
-    navigation.navigate('ShowRequests')
-  }
+  const handleRequest = async (email,timeslot,date) => {
+    await rejectRequest(email,timeslot,date).then((res) => {
+      setReject(true);
+      navigation.push('Abouthome')
+    })
+    
+  };
   return (
     <View style={styles.container}>
       {/* <Text>{JSON.stringify(json)}</Text> */}
@@ -62,7 +70,7 @@ const ShowRequests = ({navigation}) => {
             <Text style={styles.title}>{item.date}</Text>
             <View style={styles.row}>
             <TouchableOpacity style={styles.btn1} onPress={()=>handleMail(item.email,item.timeslot,item.date)}><Text>Accept</Text></TouchableOpacity>
-            <TouchableOpacity style={styles.btn2} onPress={()=>handleRequest(item.email,item.date)}><Text>Reject</Text></TouchableOpacity>
+            <TouchableOpacity style={styles.btn2} onPress={()=>handleRequest(item.email,item.timeslot,item.date)}><Text>Reject</Text></TouchableOpacity>
             </View>
           </View>
         )

@@ -80,6 +80,7 @@ const Meet = ({ navigation }) => {
           console.log(dates, "ki");
           await addSlot(dates, values, meetLink, email);
           console.log(values);
+          navigation.navigate("ShowRequests");
         }}
       >
         {({ handleChange, handleBlur, handleSubmit, values, isValid }) => (
