@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { auth } from '../../firebase/firebase';
+import { AuthContext } from '../../components/context';
 
 const RegisterScreen = ({ navigation }) => {
 	const [email, setEmail] = useState('');
@@ -15,13 +16,15 @@ const RegisterScreen = ({ navigation }) => {
 
 	const handleSighup = ({ navigation }) => {
 		// const email1 = email .getText().toString().trim()
+
+		const { signUp } = React.useContext(AuthContext);
+
 		console.log('email: ', typeof email);
 		auth
 			.createUserWithEmailAndPassword(email.trim(), password)
 			.then((userCredential) => {
 				const user = userCredential.user;
-				console.log('user: ', user);
-				navigation.push('AdminMainPage');
+				signUp(user);
 			})
 			.catch((error) => {
 				const errorCode = error.code;

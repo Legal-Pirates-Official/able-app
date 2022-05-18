@@ -69,8 +69,26 @@ const Meet = ({ navigation }) => {
         //   backgroundColor: "red",
       }}
     >
-      <View style={{width:width/1.14, alignSelf: 'center', position: 'absolute',top: '10%'}}>
-        <Text style={{alignSelf:'flex-start', fontSize: 25,fontWeight: 'bold', borderBottomColor: '#000', borderBottomWidth: 3, borderRadius: 10, }}>Schedule Meet</Text>
+      <View
+        style={{
+          width: width / 1.14,
+          alignSelf: "center",
+          position: "absolute",
+          top: "10%",
+        }}
+      >
+        <Text
+          style={{
+            alignSelf: "flex-start",
+            fontSize: 25,
+            fontWeight: "bold",
+            borderBottomColor: "#000",
+            borderBottomWidth: 3,
+            borderRadius: 10,
+          }}
+        >
+          Schedule Meet
+        </Text>
       </View>
       <Formik
         initialValues={initialFormValues}
@@ -105,12 +123,6 @@ const Meet = ({ navigation }) => {
                 >
                   <Text>See Requests</Text>
                 </TouchableOpacity> */}
-                <TouchableOpacity
-                  style={styles.btn}
-                  onPress={() => setDatePickerVisibility(true)}
-                >
-                  <Text>{dates ? dates : "Pick Date"}</Text>
-                </TouchableOpacity>
                 <ScrollView>
                   {noOfSlots &&
                     noOfSlots.map((element, index) => {
@@ -141,7 +153,7 @@ const Meet = ({ navigation }) => {
                       console.log(initial);
                     }}
                   >
-                    <Text>Add Time slot</Text>
+                    <Text style={{ color: "#000", alignSelf:'center' }}>Add Time slot</Text>
                   </TouchableOpacity>
                 </ScrollView>
 
@@ -182,15 +194,25 @@ const Meet = ({ navigation }) => {
                     <Text>Submit</Text>
                   </TouchableOpacity>
                 </Modal>
-
-                <TouchableOpacity style={styles.submitbtn} onPress={handleLink}>
-                  <Text>Change MeetLink</Text>
-                </TouchableOpacity>
+                <View style={{flexDirection: 'row'}}>
+                  <TouchableOpacity
+                    style={styles.btntwo}
+                    onPress={() => setDatePickerVisibility(true)}
+                  >
+                    <Text style={{ color: "#000", alignSelf:'center' }} >{dates ? dates : "Pick Date"}</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={styles.btntwo}
+                    onPress={handleLink}
+                  >
+                    <Text style={{ color: "#000", alignSelf:'center' }}>Change MeetLink</Text>
+                  </TouchableOpacity>
+                </View>
                 <TouchableOpacity
                   style={styles.submitbtn}
                   onPress={handleSubmit}
                 >
-                  <Text>Submit</Text>
+                  <Text style={{ color: "#fff" }}>Submit</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -237,19 +259,36 @@ const styles = StyleSheet.create({
     padding: 10,
     paddingHorizontal: 20,
     margin: 10,
-    borderColor: "#00b5ec",
-    borderWidth: 3,
+    // borderColor: "#00b5ec",
+    backgroundColor: "#00b5ec",
+    color: "#fff",
+    // borderWidth: 3,
   },
   btn: {
     borderRadius: 10,
-    padding: 10,
-    paddingHorizontal: 20,
+    paddingVertical: 15,
+    width: width/1.3,
+    alignSelf: 'center',
+    margin: 10,
+    // backgroundColor: "#00b5ec",
+    borderColor: "#00b5ec",
+    borderWidth: 3,
+  },
+  btntwo: {
+    borderRadius: 10,
+    paddingVertical: 15,
+    width: width/2.8,
+    // paddingHorizontal: 20,
+    alignItems: 'center',
     margin: 10,
     borderColor: "#00b5ec",
     borderWidth: 3,
   },
   pick: {
     width: 100,
+    color: '#000',
+    borderWidth: 2,
+    borderColor: "#000",
   },
   box: {
     flexDirection: "row",
@@ -300,4 +339,5 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
 });
+
 export default Meet;

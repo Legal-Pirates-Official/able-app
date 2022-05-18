@@ -8,18 +8,22 @@ import {
 import React, {useState, useEffect} from "react";
 import {auth} from "../../firebase/firebase";
 import {createUserWithEmailAndPassword} from "../../firebase/firebase";
+import { AuthContext } from "../../components/context";
 
 const LoginScreen = ({navigation}) => {
     const [email, setEmail] = useState("");
     const [error, setError] = useState(null);
     const [password, setPassword] = useState("");
 
+    const { signIn } = React.useContext(AuthContext);
+
     const handleLogin = () => {
         auth.signInWithEmailAndPassword(email.trim(), password)
             .then((userCredential) => {
                 const user = userCredential.user;
                 if (user) {
-                    navigation.push("AdminMainPage");
+                    // navigation.push("AdminMainPage");
+                    signin(user);
                 }
                 console.log(user);
             })
