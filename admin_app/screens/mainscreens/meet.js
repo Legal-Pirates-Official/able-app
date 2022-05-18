@@ -37,8 +37,8 @@ const Meet = ({ navigation }) => {
 
   const handleConfirm = (date) => {
     console.log("A date has been picked: ", date);
-    var strng = date.toLocaleString();
-    setDates(strng.slice(0, strng.indexOf(",")));
+    var strng = date.toLocaleDateString('en-US')
+    setDates(strng);
     hideDatePicker();
   };
 
@@ -98,6 +98,7 @@ const Meet = ({ navigation }) => {
           console.log(dates, "ki");
           await addSlot(dates, values, meetLink, email);
           console.log(values);
+          navigation.navigate("ShowRequests");
         }}
       >
         {({ handleChange, handleBlur, handleSubmit, values, isValid }) => (
