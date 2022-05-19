@@ -61,11 +61,11 @@ const StoryDetails = ({
 		>
 			<Formik
 				initialValues={{
-					title: updateDetails ? updateDetails.video_title : 'essgr',
+					title: updateDetails ? updateDetails.video_title : '',
 					description: updateDetails
 						? updateDetails.video_description
-						: 'essgr',
-					video_url: updateDetails ? updateDetails.video_url : 'essgr',
+						: '',
+					video_url: updateDetails ? updateDetails.video_url : '',
 					video_type: updateDetails ? updateDetails.video_type : 'Mini clip'
 				}}
 				onSubmit={async (values, actions) => {

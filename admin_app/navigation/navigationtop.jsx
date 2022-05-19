@@ -2,10 +2,12 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 import { AntDesign } from "@expo/vector-icons";
 import { StyleSheet } from "react-native";
 import AboutAdmin from "../screens/mainscreens/AboutAdmin";
+import LoginScreen from "../screens/login/LoginScreen";
 import ReadStories from "../screens/Stories/ReadStories.screen";
 import Meet from "../screens/mainscreens/meet";
 import ShowRequests from "../screens/mainscreens/ShowRequests";
 import Navigation from "./navigation";
+import Logout from "../screens/mainscreens/logout";
 import ReadAbout from "../screens/About/ReadAbout.screen";
 
 const Tab = createMaterialTopTabNavigator();
@@ -14,6 +16,7 @@ function Topnavigation() {
   return (
     <Tab.Navigator
       tabBarPosition="bottom"
+            
       screenOptions={({ route }) => ({
         swipeEnabled: false,
         tabBarLabelStyle: { fontSize: 12 },
@@ -53,6 +56,8 @@ function Topnavigation() {
             iconName = focused ? "google" : "google";
           } else if (route.name === "ShowRequests") {
             iconName = focused ? "message1" : "message1";
+          } else if (route.name === "Signout") {
+            iconName = focused ? "logout" : "logout";
           }
           // You can return any component that you like here!
           return <AntDesign name={iconName} size={20} color={color} />;
@@ -73,6 +78,8 @@ function Topnavigation() {
       <Tab.Screen name="Stories" component={ReadStories} />
       <Tab.Screen name="Meet" component={Meet} />
       <Tab.Screen name="ShowRequests" component={ShowRequests} />
+      <Tab.Screen name="Signout" component={Logout} />
+
     </Tab.Navigator>
   );
 }

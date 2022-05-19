@@ -19,7 +19,6 @@ function Topnavigation() {
             screenOptions={({route}) => ({
                 tabBarActiveTintColor: "#e91e63",
                 swipeEnabled: false,
-                tabBarLabelStyle: {fontSize: 12},
                 // tabBarIndicator: () => null,
                 tabBarIndicatorContainerStyle: {
                     borderRadius: 20,
@@ -78,7 +77,7 @@ function Topnavigation() {
                     );
                 },
                 tabBarActiveTintColor: "#fff",
-                tabBarInactiveTintColor: "rgb(77, 77, 77)",
+                tabBarInactiveTintColor: "#fff",
                 lazy: true,
                 tabBarShowLabel: false,
             })}
@@ -91,7 +90,7 @@ function Topnavigation() {
             <Tab.Screen name="Home" component={Home} />
             <Tab.Screen name="About" component={About} />
             <Tab.Screen name="Stories" component={StoryNavigation} />
-            <Tab.Screen name="Interaction" component={Interaction} />
+            {/* <Tab.Screen name="Interaction" component={Interaction} /> */}
         </Tab.Navigator>
     );
 }
@@ -101,6 +100,6 @@ export default Topnavigation;
 const Styles = StyleSheet.create({
     navbar: {
         borderRadius: 20,
-        width: "80%",
+        width: "90%",
     },
 });
