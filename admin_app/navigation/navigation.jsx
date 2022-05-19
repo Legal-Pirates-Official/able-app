@@ -6,21 +6,42 @@ import Showyoutube from '../components/showyoutube.home'
 import ShowLiveEvents from '../components/showliveevents.home'
 import LoginScreen from '../screens/login/LoginScreen'
 import Forgot from "../screens/login/Forgot";
+
 const Stack = createNativeStackNavigator();
+
+const getTabBarVisibility = (route) => {
+    console.log('====================================');
+    console.log(route.name);
+    console.log('====================================');
+    const routeName = route.name
+      
+  
+    if (routeName === 'LoginScreen') {
+      return false;
+    }
+  
+    return true;
+  }
+
+
 
 export default function Navigation() {
     return (
         <Stack.Navigator>
-            <Stack.Screen
+            {/* <Stack.Screen
                 name="LoginScreen"
                 component={LoginScreen}
-                options={{headerShown: false}}
+               options={({ route }) => ({
+                headerShown: false,
+                    tabBarVisible: getTabBarVisibility(route)
+                  })}
+                
             />
               <Stack.Screen
                 name="Forgot"
                 component={Forgot}
                 options={{headerShown: false}}
-            />
+            /> */}
             <Stack.Screen
                 name="Root"
                 component={Homeabout}

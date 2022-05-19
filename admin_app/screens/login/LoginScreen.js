@@ -23,7 +23,7 @@ import {
         .then((userCredential) => {
           const user = userCredential.user;
           if (user) {
-            navigation.push("Root");
+            navigation.push("TabsStack");
           }
           console.log(user);
         })
@@ -48,6 +48,7 @@ import {
               value={email}
             />
             <TextInput
+                secureTextEntry={true}
               placeholder="Enter your Password"
               style={styles.input}
               onChangeText={(text) => setPassword(text)}

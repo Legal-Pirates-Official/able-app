@@ -7,7 +7,8 @@ import Loginnav from "./navigation/loginnav";
 import { AuthContext } from "./components/context";
 import Navigation from "./navigation/navigation";
 import Homeabout from "./screens/mainscreens/Homeabout";
-
+import LoginScreen from "./screens/login/LoginScreen";
+import Forgot from "./screens/login/Forgot";
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -54,9 +55,23 @@ export default function App() {
   return (
     <AuthContext.Provider value={authContext}>
     <NavigationContainer>
-      {console.log(isLoggedIn)} 
-      {console.log(user)}
-      {isLoggedIn ? <Topnavigation /> : <Loginnav /> }
+    <Stack.Navigator>
+        <Stack.Screen name="LoginScreen" component={LoginScreen} options={
+          {
+            headerShown: false,
+          }
+        }/>
+        <Stack.Screen name="TabsStack" component={Topnavigation} options={
+          {
+            headerShown: false,
+          }
+        }/>
+        <Stack.Screen name="Forgot" component={Forgot} options={
+          {
+            headerShown: false,
+          }
+        }/>
+      </Stack.Navigator>
     </NavigationContainer>
     </AuthContext.Provider>
   );

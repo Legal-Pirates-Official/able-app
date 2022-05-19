@@ -11,7 +11,18 @@ import Logout from "../screens/mainscreens/logout";
 import ReadAbout from "../screens/About/ReadAbout.screen";
 
 const Tab = createMaterialTopTabNavigator();
+const getTabBarVisibility = (route) => {
+  console.log('====================================');
+  console.log(route);
+  console.log('====================================');
+  const routeName = route.name
+   
+  if (routeName === 'homenavigator') {
+    return false;
+  }
 
+  return true;
+}
 function Topnavigation() {
   return (
     <Tab.Navigator
@@ -73,12 +84,14 @@ function Topnavigation() {
         },
       }}
     >
-      <Tab.Screen name="homenavigator" component={Navigation} />
+      <Tab.Screen name="homenavigator" component={Navigation} options={({ route }) => ({
+        tabBarVisible: getTabBarVisibility(route)
+      })}/>
       <Tab.Screen name="About" component={ReadAbout} />
       <Tab.Screen name="Stories" component={ReadStories} />
       <Tab.Screen name="Meet" component={Meet} />
       <Tab.Screen name="ShowRequests" component={ShowRequests} />
-      <Tab.Screen name="Signout" component={Logout} />
+      {/* <Tab.Screen name="Signout" component={Logout} /> */}
 
     </Tab.Navigator>
   );
