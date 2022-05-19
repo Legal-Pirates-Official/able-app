@@ -38,6 +38,7 @@ const Meet = ({ navigation }) => {
   const handleConfirm = (date) => {
     console.log("A date has been picked: ", date);
     var strng = date.toLocaleDateString('en-US')
+    console.log(strng);
     setDates(strng);
     hideDatePicker();
   };
